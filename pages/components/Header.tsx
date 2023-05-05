@@ -6,7 +6,9 @@ function Header() {
   return (
     <div className='text-black'>
       {/* Lgog */}
-      <img src="header.svg" className='absolute left-0 -top-40' style={{maxWidth: "100%"}} alt="" />
+ 
+
+      <img src="header.svg" className='absolute left-0 -top-40' style={{ maxWidth: "100%" }} alt="" />
       {/* <Image /> */}
     </div>
   )
