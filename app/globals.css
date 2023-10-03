@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+   --gradient: linear-gradient(to left,
+         #ffffff00,
+         rgba(169, 169, 169, 0.649),
+         #ffffff00);
+   --bg: #d9d9d93b;
+   --speed: 1.3s;
+}
+
+body {
+   overflow: hidden;
+}
+
+.convert_btn {
+   background: #0E8FF2;
+   padding: 10px;
+   border-radius: 10px;
+   color: white;
+   font-weight: 600;
+   font-size: 15px;
+   transition: 200ms ease-in-out;
+}
+
+.convert_btn:hover {}
+
+.convert_btn:active {
+   opacity: 1;
+}
+
+select option {
+   border: 3px solid red;
+   padding: 5px;
+}
+
+.currency-selection {
+   transition: 300ms ease-in-out;
+   display: none;
+}
+
+.show-selection {
+   display: block;
+}
+
+.drop-icon {
+   rotate: 0deg;
+}
+
+.to-drop-icon {
+   rotate: 180deg;
+}
+
+.from-drop-icon {
+   rotate: 180deg;
+}
+
+
+
+
+.currency-selection::-webkit-scrollbar-thumb {
+   background: red;
+   border-radius: 10px;
+}
+
+.currency-selection ::-webkit-scrollbar-thumb:hover {
+   background: #ff0000;
+   border-radius: 10px;
+   z-index: 999;
+}
+
+.currency-selection::-webkit-scrollbar-track {
+   box-shadow: inset 0 0 5px grey;
+   border-radius: 10px;
+}
+
+
+
+@media only screen and (max-width: 200px) {
+
+
+   .main-cont {}
+}
+
+@media (min-width: 90%) and (max-width: 100%) {
+   .convert_btn {
+      display: none;
+
+   }
+}
