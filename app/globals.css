@@ -8,8 +8,30 @@
          rgba(169, 169, 169, 0.649),
          #ffffff00);
    --bg: #d9d9d93b;
-   --speed: 1.3s;
+   --speed: 1s;
 }
+
+.bar1 {
+   position: relative;
+   background-image: var(--gradient);
+   background-position: -540px;
+   background-repeat: no-repeat;
+   animation: shimmer var(--speed) linear infinite;
+}
+.bar2 {
+   position: relative;
+   background-image: var(--gradient);
+   background-position: -540px;
+   background-repeat: no-repeat;
+   animation: shimmer var(--speed) linear infinite;
+}
+
+@keyframes shimmer {
+   to {
+     background-position: 400px 0;
+   }
+ }
+ 
 
 body {
    overflow: hidden;
@@ -25,8 +47,6 @@ body {
    transition: 200ms ease-in-out;
 }
 
-.convert_btn:hover {}
-
 .convert_btn:active {
    opacity: 1;
 }
@@ -37,12 +57,40 @@ select option {
 }
 
 .currency-selection {
-   transition: 300ms ease-in-out;
+   animation: hide 300ms linear;
+}
+
+.new-show-selection {
    display: none;
 }
 
 .show-selection {
-   display: block;
+   /* display: block; */
+   animation: show 300ms linear;
+}
+
+@keyframes show {
+   from {
+      opacity: 0;
+      transform: translateY(-10px);
+   }
+
+   to {
+      opacity: 1;
+      transform: translateY(0px);
+   }
+}
+
+@keyframes hide {
+   from {
+      opacity: 1;
+      transform: translateY(0px);
+   }
+
+   to {
+      opacity: 0;
+      transform: translateY(-10px);
+   }
 }
 
 .drop-icon {

@@ -4,6 +4,7 @@
 import currencyData from "@/app/countriesData.json"
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import SkelentonLoader from "./SkelentonLoader";
 
 type CurrencyData = {
   alpha2: String,
@@ -15,8 +16,8 @@ const Main = () => {
 
   const fromCurrencyRef = useRef<HTMLDivElement>(null)
   const toCurrencyRef = useRef<HTMLDivElement>(null)
-  const toDropIconRef = useRef<HTMLElement>(null)
-  const fromDropIconRef = useRef<HTMLElement>(null)
+  const toDropIconRef = useRef<HTMLImageElement>(null)
+  const fromDropIconRef = useRef<HTMLImageElement>(null)
   const [fromCurrency, setFromCurrency] = useState("USD")
   const [toCurrency, setToCurrency] = useState<String>("EUR") // Explict about Type String
   const [fromselectionActive, setFromSelectionActive] = useState(false)
@@ -37,10 +38,14 @@ const Main = () => {
       setFromSelectionActive(true)
       fromCurrencyRef.current?.classList.add("show-selection")
       fromDropIconRef.current?.classList.add("from-drop-icon")
+        fromCurrencyRef.current?.classList.remove("new-show-selection")
     } else {
       setFromSelectionActive(false)
       fromCurrencyRef.current?.classList.remove("show-selection");
       fromDropIconRef.current?.classList.remove("from-drop-icon")
+      setTimeout(() => {
+        fromCurrencyRef.current?.classList.add("new-show-selection")
+      }, 250)
     }
   }
 
@@ -50,14 +55,18 @@ const Main = () => {
       setToSelectionActive(true)
       toCurrencyRef.current?.classList.add("show-selection")
       toDropIconRef.current?.classList.add("to-drop-icon")
+        toCurrencyRef.current?.classList.remove("new-show-selection")
     } else {
       setToSelectionActive(false)
       toCurrencyRef.current?.classList.remove("show-selection");
       toDropIconRef.current?.classList.remove("to-drop-icon")
+      setTimeout(() => {
+        toCurrencyRef.current?.classList.add("new-show-selection")
+      }, 250)
     }
   }
 
-  
+
 
   return (
     <div
@@ -83,10 +92,10 @@ const Main = () => {
                 <div className="select-none">{fromCurrency}</div>
               </div>
               {/* drop down icon */}
-              <Image width={20} height={100} src="assets/drop.svg" className="drop-icon transition-all" ref={fromDropIconRef} alt="icon" />
+              <Image width={20} height={100} src="assets/drop.svg" className="drop-icon transition-all  select-none" ref={fromDropIconRef} alt="icon" />
 
               {/* options */}
-              <div ref={fromCurrencyRef} className="currency-selection flex flex-col absolute mt-[50px] border-2 border-gray-300 w-full rounded-[10px] shadow-xl gap-[10px] overflow-y-scroll left-0 h-[200px] bg-white z-10">
+              <div ref={fromCurrencyRef} className="new-show-selection currency-selection flex flex-col absolute mt-[50px] border-2 border-gray-300 w-full rounded-[10px] shadow-xl gap-[10px] overflow-y-scroll left-0 h-[200px] bg-white z-10">
                 {/* {currencyData.map((data) => {
                   <p>{data}</p>
                 })} */}
@@ -121,16 +130,15 @@ const Main = () => {
                 <div className="select-none">{toCurrency}</div>
               </div>
               {/* drop down icon */}
-              <Image width={20} height={100} src="assets/drop.svg" className="drop-icon transition-all" ref={toDropIconRef} alt="icon" />
+              <Image width={20} height={100} src="assets/drop.svg" className="drop-icon transition-all  select-none" ref={toDropIconRef} alt="icon" />
 
 
               {/* options */}
-              <div ref={toCurrencyRef} className="currency-selection flex flex-col absolute mt-[50px] border-2 border-gray-300 w-full rounded-[10px] shadow-xl  gap-[10px] overflow-y-scroll left-0 h-[200px] bg-white z-10">
+              <div ref={toCurrencyRef} className=" new-show-selection currency-selection flex flex-col absolute mt-[50px] border-2 border-gray-300 w-full rounded-[10px] shadow-xl  gap-[10px] overflow-y-scroll left-0 h-[200px] bg-white z-10">
                 <div className="flex items-center  p-[10px] hover:bg-gray-300">
                   <Image width={10} height={10} src="" alt="country flag" />
                   <div>USD</div>
                 </div>
-
                 {/* ---------- */}
               </div>
             </div>
@@ -161,8 +169,9 @@ const Main = () => {
           {/* Conversion*/}
           <div className="flex items-start justify-center flex-col gap-[10px]">
             <p className="font-[600] text-gray-700">Conversion</p>
-            <div className="flex gap-5">
-              <p className="">Select The Currency of choice and amount to begin Conversion.</p>
+            <div className="flex w-[70%] gap-5">
+              <SkelentonLoader />
+              {/* <p className="">Select The Currency of choice and amount to begin Conversion.</p> */}
             </div>
           </div>
         </div>
