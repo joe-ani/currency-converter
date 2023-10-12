@@ -27,7 +27,9 @@ const Main = () => {
   const [toselectionActive, setToSelectionActive] = useState(false)
   const [countries, setCountries] = useState([]);
   const [result, setResult] = useState("")
-
+  const [toRate, setToRate] = useState("")
+  const [fromRate, setFromRate] = useState(1)
+  const [initialize, setInitialize] = useState("OFF")
 
   // https://flagcdn.com/16x12/{country}.png -->> Country Flag API 
   // https://api.apilayer.com/currency_currencyData/convert?to=USD&from=EUR& amount=20&  --header 'apikey: YOUR API KEY -->> Currency conversion API
@@ -50,12 +52,10 @@ const Main = () => {
     setToCountryCode(fromCountryCode)
   }
 
-  useEffect(() => {
-    console.log("rates of", fromCurrency, "to", toCurrency)
-    // api call to get the rates 
-  }, [toCurrency, fromCurrency])
+
 
   const convert = async () => {
+    setInitialize("ON")
     try {
       const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
       const axiosConfig = {
@@ -65,7 +65,7 @@ const Main = () => {
       };
       const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
       // Assuming your API returns JSON data, you can access it like this:
-      console.log(response.data);
+      setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
       setResult(response.data.result)
       popupRef.current?.classList.add("success-popup")
       setTimeout(() => {
@@ -139,7 +139,7 @@ const Main = () => {
         {/* Input */}
         <div className="flex flex-col ">
           <p className="font-[600] text-gray-700 select-none">Amount</p>
-          <input ref={amountRef} onChange={validateInput} type="number"  className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none " />
+          <input ref={amountRef} onChange={validateInput} type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none " />
         </div>
 
         <div className="flex items-center justify-center gap-9">
@@ -217,15 +217,15 @@ const Main = () => {
         <div className="flex flex-col gap-3 w-[300px]  border-red-600 border-0">
           {/* line */}
           <div className="w-[100%] h-[2px] bg-gray-200 "></div>
-          {/* Rates */}
+          {/* toRates */}
           <div className="flex items-center justify-center flex-col relativen gap-[10px]">
             <p className="font-[600] text-gray-700">Rates</p>
-              {/* <SkelentonLoader /> */}
+            {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
-              <div className="text-red-500  flex items-center gap-2">1.00 <div className="text-gray-600 font-[600]">USD</div></div>
+              <div className="text-red-500  flex items-center gap-2">{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
               <div>=</div>
-              <div className="text-green-500 flex items-center gap-2" >1.70 <div className="text-gray-600 font-[600]">EUR</div></div>
+              <div className="text-green-500 flex items-center gap-2" >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
             </div>
           </div>
           {/* line */}
@@ -236,14 +236,15 @@ const Main = () => {
             <div className="flex w-[70%] gap-5">
               {/* conditional */}
 
-              {/* {result === "" ?} */}
-              {/* <p className="">Select The Currency of choice and amount to begin Conversion.</p> */}
+
+
               <div className="flex gap-5">
-                <div className="text-red-500  flex items-center gap-2">{amountRef.current?.value} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+                <div className="text-red-500  flex items-center gap-2">{Number(amountRef.current?.value).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
                 <div>=</div>
-                <div className="text-green-500 flex items-center gap-2" >{result} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+                <div className="text-green-500 flex items-center gap-2" >{Number(result).toFixed(2)} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
               </div>
-              {/* <SkelentonLoader /> */}
+
+              {/* <p className="">Select The Currency of choice and amount to begin Conversion.</p> */}
             </div>
           </div>
         </div>
