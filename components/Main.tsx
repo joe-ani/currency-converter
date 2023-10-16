@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 import SkelentonLoader from "./SkelentonLoader";
 import axios from "axios";
 
+
 type CurrencyData = {
   alpha2: String,
   currencyCode: String
@@ -30,6 +31,7 @@ const Main = () => {
   const [toRate, setToRate] = useState("")
   const [fromRate, setFromRate] = useState(1)
   const [initialize, setInitialize] = useState("OFF")
+  const [resultStatus, setResultStatus] = useState("")
 
   // https://flagcdn.com/16x12/{country}.png -->> Country Flag API 
   // https://api.apilayer.com/currency_currencyData/convert?to=USD&from=EUR& amount=20&  --header 'apikey: YOUR API KEY -->> Currency conversion API
@@ -52,9 +54,25 @@ const Main = () => {
     setToCountryCode(fromCountryCode)
   }
 
+  const resultData = () => {
+    console.log(resultStatus)
+    if (result === "" && initialize === "OFF") {
+      return <p className="">Select The Currency of choice and amount to begin Conversion.</p>
+    } else if (result === "" && initialize === "ON" || resultStatus === "in-progress") {
+      return <SkelentonLoader />
+    } else if (result !== "" && initialize === "ON" || resultStatus === "done") {
+      return <div className="flex gap-5">
+        <div className="text-red-500  flex items-center gap-2">{Number(amountRef.current?.value).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+        <div>=</div>
+        <div className="text-green-500 flex items-center gap-2" >{Number(result).toFixed(2)} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+      </div>
+    }
+  }
+
 
 
   const convert = async () => {
+    setResultStatus("in-progress")
     setInitialize("ON")
     try {
       const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
@@ -66,6 +84,8 @@ const Main = () => {
       const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
       // Assuming your API returns JSON data, you can access it like this:
       setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
+      // setInitialize("OFF")
+      setResultStatus("done")
       setResult(response.data.result)
       popupRef.current?.classList.add("success-popup")
       setTimeout(() => {
@@ -135,7 +155,11 @@ const Main = () => {
       {/* top section */}
       <div className="flex gap-[100px] items-center justify-center border-red-600 border-0">
         {/* ---Success--- */}
+        {/* <div className="flex"> */}
+
         <p ref={popupRef} className=" z-10 text-gray-700 text-[12px] bg-green-200 shadow-lg font-[400] p-[15px] rounded-lg absolute opacity-0">Successfully Converted 50 USD to EUR </p>
+        {/* </div> */}
+
         {/* Input */}
         <div className="flex flex-col ">
           <p className="font-[600] text-gray-700 select-none">Amount</p>
@@ -220,6 +244,7 @@ const Main = () => {
           {/* toRates */}
           <div className="flex items-center justify-center flex-col relativen gap-[10px]">
             <p className="font-[600] text-gray-700">Rates</p>
+
             {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
@@ -235,15 +260,7 @@ const Main = () => {
             <p className="font-[600] text-gray-700">Conversion</p>
             <div className="flex w-[70%] gap-5">
               {/* conditional */}
-
-
-
-              <div className="flex gap-5">
-                <div className="text-red-500  flex items-center gap-2">{Number(amountRef.current?.value).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
-                <div>=</div>
-                <div className="text-green-500 flex items-center gap-2" >{Number(result).toFixed(2)} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
-              </div>
-
+              {resultData()}
               {/* <p className="">Select The Currency of choice and amount to begin Conversion.</p> */}
             </div>
           </div>

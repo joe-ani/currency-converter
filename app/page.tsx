@@ -27,9 +27,6 @@ export default function Home() {
 
         <Main />
 
-
-
-
       {/* Footer */}
       <Image
         layout="fill"
