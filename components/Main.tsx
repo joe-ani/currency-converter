@@ -78,23 +78,26 @@ const Main = () => {
 
   // Disable Button If the user Have a Conversion 
   useEffect(() => {
-    console.log("checking...")
-    if (fromCurrency !== prevFromCurrency && toCurrency !== prevToCurrency) {
+    console.log("checking1...", prevToCurrency, prevFromCurrency)
+    console.log("checking2...",  toCurrency, fromCurrency)
+    if (fromCurrency !== prevFromCurrency || toCurrency !== prevToCurrency) {
+      console.log("allowing...")
       SetAllowConversion(true)
       // buttonRef.current?.setAttribute("disabled", false)
-    } else if (fromCurrency === prevFromCurrency && toCurrency === prevToCurrency) {
+    } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency) {
+      console.log("denying...")
       SetAllowConversion(false)
       // buttonRef.current?.setAttribute("disabled", true)
     }
-  }, [toCurrency, fromCurrency])
+  }, [toCurrency, fromCurrency, resultStatus])
 
 
   const convert = async () => {
-    setResultStatus("in-progress")
     setInitialize("ON")
     setPrevFromCurrency(fromCurrency)
     setPrevToCurrency(toCurrency)
     if (allowConversion) {
+      setResultStatus("in-progress")
       console.log("allowed")
       try {
         const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
