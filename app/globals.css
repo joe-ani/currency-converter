@@ -20,12 +20,15 @@
       top: 20px;
       opacity: 0;
    }
+
    10% {
       opacity: 1;
    }
+
    90% {
       opacity: 1;
    }
+
    100% {
       top: -20px;
       opacity: 0;
@@ -60,7 +63,7 @@
 
 .number-input::-webkit-outer-spin-button {
    display: none;
- }
+}
 
 body {
    overflow: hidden;
@@ -76,8 +79,26 @@ body {
    transition: 200ms ease-in-out;
 }
 
+.convert_btn:hover {
+   background: #006abb;
+}
+
+.disable-btn {
+   background: #0E8FF2;
+   padding: 10px;
+   border-radius: 10px;
+   color: white;
+   font-weight: 600;
+   font-size: 15px;
+   cursor: not-allowed;
+   opacity: .2;
+   transition: 200ms ease-in-out;
+}
+
+
 .convert_btn:active {
    opacity: 1;
+   scale: .9;
 }
 
 select option {

@@ -37,7 +37,6 @@ const Main = () => {
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
-  const [prevCode, setPrevCode] = useState("")
 
 
 
@@ -83,11 +82,13 @@ const Main = () => {
     if (fromCurrency !== prevFromCurrency || toCurrency !== prevToCurrency) {
       console.log("allowing...")
       SetAllowConversion(true)
-      // buttonRef.current?.setAttribute("disabled", false)
+      buttonRef.current?.classList.remove("disable-btn")
+      buttonRef.current?.classList.add("convert_btn")
     } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency) {
       console.log("denying...")
       SetAllowConversion(false)
-      // buttonRef.current?.setAttribute("disabled", true)
+      buttonRef.current?.classList.add("disable-btn")
+      buttonRef.current?.classList.remove("convert_btn")
     }
   }, [toCurrency, fromCurrency, resultStatus])
 
@@ -293,7 +294,7 @@ const Main = () => {
         </div>
 
         {/* button */}
-        <button onClick={convert} ref={buttonRef} className="convert_btn transition-all hover:bg-[#006abb] active:scale-[.9] ">
+        <button onClick={convert} ref={buttonRef} className="convert_btn">
           Convert
         </button>
       </div>
