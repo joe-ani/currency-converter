@@ -11,7 +11,7 @@ type CurrencyData = {
   alpha2: String,
   currencyCode: String
 }
-const typedCurrencyData: CurrencyData[] = currencyData
+
 
 const Main = () => {
   const fromCurrencyRef = useRef<HTMLDivElement>(null)
@@ -20,6 +20,7 @@ const Main = () => {
   const toDropIconRef = useRef<HTMLImageElement>(null)
   const fromDropIconRef = useRef<HTMLImageElement>(null)
   const amountRef = useRef<HTMLInputElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const [fromCountryCode, setFromCountryCode] = useState("gb")
   const [toCountryCode, setToCountryCode] = useState("us")
   const [fromCurrency, setFromCurrency] = useState("GBP")
@@ -32,6 +33,13 @@ const Main = () => {
   const [fromRate, setFromRate] = useState(1)
   const [initialize, setInitialize] = useState("OFF")
   const [resultStatus, setResultStatus] = useState("")
+  const [allowConversion, SetAllowConversion] = useState(true)
+  // --------------------------------
+  const [prevFromCurrency, setPrevFromCurrency] = useState("")
+  const [prevToCurrency, setPrevToCurrency] = useState("")
+  const [prevCode, setPrevCode] = useState("")
+
+
 
   // https://flagcdn.com/16x12/{country}.png -->> Country Flag API 
   // https://api.apilayer.com/currency_currencyData/convert?to=USD&from=EUR& amount=20&  --header 'apikey: YOUR API KEY -->> Currency conversion API
@@ -55,7 +63,6 @@ const Main = () => {
   }
 
   const resultData = () => {
-    console.log(resultStatus)
     if (result === "" && initialize === "OFF") {
       return <p className="">Select The Currency of choice and amount to begin Conversion.</p>
     } else if (result === "" && initialize === "ON" || resultStatus === "in-progress") {
@@ -69,30 +76,48 @@ const Main = () => {
     }
   }
 
+  // Disable Button If the user Have a Conversion 
+  useEffect(() => {
+    console.log("checking...")
+    if (fromCurrency !== prevFromCurrency && toCurrency !== prevToCurrency) {
+      SetAllowConversion(true)
+      // buttonRef.current?.setAttribute("disabled", false)
+    } else if (fromCurrency === prevFromCurrency && toCurrency === prevToCurrency) {
+      SetAllowConversion(false)
+      // buttonRef.current?.setAttribute("disabled", true)
+    }
+  }, [toCurrency, fromCurrency])
 
 
   const convert = async () => {
     setResultStatus("in-progress")
     setInitialize("ON")
-    try {
-      const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
-      const axiosConfig = {
-        headers: {
-          'apikey': API_KEY
-        }
-      };
-      const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-      // Assuming your API returns JSON data, you can access it like this:
-      setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
-      // setInitialize("OFF")
-      setResultStatus("done")
-      setResult(response.data.result)
-      popupRef.current?.classList.add("success-popup")
-      setTimeout(() => {
-        popupRef.current?.classList.remove("success-popup")
-      }, 2100)
-    } catch (error) {
-      console.error('Error:', error);
+    setPrevFromCurrency(fromCurrency)
+    setPrevToCurrency(toCurrency)
+    if (allowConversion) {
+      console.log("allowed")
+      try {
+        const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
+        const axiosConfig = {
+          headers: {
+            'apikey': API_KEY
+          }
+        };
+        const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+        // Assuming your API returns JSON data, you can access it like this:
+        setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
+        // setInitialize("OFF")
+        setResultStatus("done")
+        setResult(response.data.result)
+        popupRef.current?.classList.add("success-popup")
+        setTimeout(() => {
+          popupRef.current?.classList.remove("success-popup")
+        }, 2100)
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      console.log("denied")
     }
   };
 
@@ -250,7 +275,7 @@ const Main = () => {
             <div className="flex gap-5">
               <div className="text-red-500  flex items-center gap-2">{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
               <div>=</div>
-              <div className="text-green-500 flex items-center gap-2" >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+              <div className="text-green-500 flex items-center gap-2" >{Number(toRate).toFixed(3)} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
             </div>
           </div>
           {/* line */}
@@ -259,15 +284,13 @@ const Main = () => {
           <div className="flex items-start justify-center flex-col gap-[10px]">
             <p className="font-[600] text-gray-700">Conversion</p>
             <div className="flex w-[70%] gap-5">
-              {/* conditional */}
               {resultData()}
-              {/* <p className="">Select The Currency of choice and amount to begin Conversion.</p> */}
             </div>
           </div>
         </div>
 
         {/* button */}
-        <button onClick={convert} className="convert_btn transition-all hover:bg-[#006abb] active:scale-[.9] ">
+        <button onClick={convert} ref={buttonRef} className="convert_btn transition-all hover:bg-[#006abb] active:scale-[.9] ">
           Convert
         </button>
       </div>
