@@ -27,7 +27,6 @@ const Main = () => {
   const [toCurrency, setToCurrency] = useState("USD") // Explict about Type String
   const [fromselectionActive, setFromSelectionActive] = useState(false)
   const [toselectionActive, setToSelectionActive] = useState(false)
-  const [countries, setCountries] = useState([]);
   const [result, setResult] = useState("")
   const [toRate, setToRate] = useState("")
   const [fromRate, setFromRate] = useState(1)
@@ -37,6 +36,8 @@ const Main = () => {
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
+  const [input, setInput] = useState("")
+  const [prevInput, setPrevInput] = useState("")
 
 
 
@@ -78,25 +79,36 @@ const Main = () => {
   // Disable Button If the user Have a Conversion 
   useEffect(() => {
     console.log("checking1...", prevToCurrency, prevFromCurrency)
-    console.log("checking2...",  toCurrency, fromCurrency)
-    if (fromCurrency !== prevFromCurrency || toCurrency !== prevToCurrency) {
-      console.log("allowing...")
-      SetAllowConversion(true)
-      buttonRef.current?.classList.remove("disable-btn")
-      buttonRef.current?.classList.add("convert_btn")
-    } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency) {
+    console.log("checking2...", toCurrency, fromCurrency)
+    if (fromCurrency !== prevFromCurrency || toCurrency !== prevToCurrency || prevInput !== input) {
+      if (amountRef.current?.value === "") {
+        console.log("denying...")
+        SetAllowConversion(false)
+        buttonRef.current?.classList.add("disable-btn")
+        buttonRef.current?.classList.remove("convert_btn")
+      } else if (amountRef.current?.value !== "") {
+        console.log("allowing...")
+        SetAllowConversion(true)
+        buttonRef.current?.classList.remove("disable-btn")
+        buttonRef.current?.classList.add("convert_btn")
+      }
+    } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency ||  prevInput === input) {
       console.log("denying...")
       SetAllowConversion(false)
       buttonRef.current?.classList.add("disable-btn")
       buttonRef.current?.classList.remove("convert_btn")
     }
-  }, [toCurrency, fromCurrency, resultStatus])
+  }, [toCurrency, fromCurrency, resultStatus, input])
 
 
   const convert = async () => {
-    setInitialize("ON")
+    if (amountRef.current?.value !== "") {
+      setInitialize("ON")
+    } else return;
+
     setPrevFromCurrency(fromCurrency)
     setPrevToCurrency(toCurrency)
+    setPrevInput(input)
     if (allowConversion) {
       setResultStatus("in-progress")
       console.log("allowed")
@@ -127,6 +139,7 @@ const Main = () => {
 
   const validateInput = () => {
     const inputValue: any = Number(amountRef.current?.value).toLocaleString()
+    setInput(Number(amountRef.current?.value).toLocaleString())
     // e.target.value =  Number(amountRef.current?.value).toLocaleString()
     const formattedValue = inputValue.toLocaleString();
 

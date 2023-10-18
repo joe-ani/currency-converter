@@ -154,22 +154,20 @@ select option {
    rotate: 180deg;
 }
 
+.currency-selection::-webkit-scrollbar {
+   width: 7px;
+   height: 8px;
+   border-radius: 50px;
+   background-color: #aaaaaa00;
+}
+
 
 .currency-selection::-webkit-scrollbar-thumb {
-   background: red;
-   border-radius: 10px;
+   background: #ccc;
+   border-radius: 50px;
 }
 
-.currency-selection ::-webkit-scrollbar-thumb:hover {
-   background: #ff0000;
-   border-radius: 10px;
-   z-index: 999;
-}
 
-.currency-selection::-webkit-scrollbar-track {
-   box-shadow: inset 0 0 5px grey;
-   border-radius: 10px;
-}
 
 
 @media only screen and (max-height: 600px) {
