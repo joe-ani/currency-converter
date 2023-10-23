@@ -35,6 +35,8 @@ const Main = () => {
   const [allowConversion, SetAllowConversion] = useState(true)
   const [toRateColor, setToRateColor] = useState("red")
   const [fromRateColor, setFromRateColor] = useState("green")
+  const [toCurrencyColor, setToCurrencyColor] = useState("red")
+  const [fromCurrencyColor, setFromCurrencyColor] = useState("green")
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
@@ -71,9 +73,9 @@ const Main = () => {
       return <SkelentonLoader />
     } else if (result !== "" && initialize === "ON" || resultStatus === "done") {
       return <div className="flex gap-5">
-        <div className="text-red-500  flex items-center gap-2">{Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+        <div className={`text-${fromCurrencyColor}-500  flex items-center gap-2`}>{Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
         <div>=</div>
-        <div className="text-green-500 flex items-center gap-2" >{Number(Number(result).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+        <div className={`text-${toCurrencyColor}-500 flex items-center gap-2`}>{Number(Number(result).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
       </div>
     }
   }
@@ -94,20 +96,22 @@ const Main = () => {
         buttonRef.current?.classList.remove("disable-btn")
         buttonRef.current?.classList.add("convert_btn")
       }
-    } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency ||  prevInput === input) {
+    } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency || prevInput === input) {
       console.log("denying...")
       SetAllowConversion(false)
       buttonRef.current?.classList.add("disable-btn")
       buttonRef.current?.classList.remove("convert_btn")
     }
 
-    if (Number(toRate) > Number(fromRate)) {
-      console.log("red")
+    // set colours based on rates and conversion
+    if (Number(toRate) < Number(fromRate)) {
+      setToRateColor("green")
+      setFromRateColor("red")
     } else {
-      console.log("green")
+      setToRateColor("red")
+      setFromRateColor("green")
     }
 
-    // set colours based on 
   }, [toCurrency, fromCurrency, resultStatus, input])
 
 
@@ -301,7 +305,7 @@ const Main = () => {
             <div className="flex gap-5">
               <div className={`text-${toRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
               <div>=</div>
-              <div className="text-green-500 flex items-center gap-2" >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+              <div className={`text-${fromRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
             </div>
           </div>
           {/* line */}
