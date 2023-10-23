@@ -71,7 +71,7 @@ const Main = () => {
       return <div className="flex gap-5">
         <div className="text-red-500  flex items-center gap-2">{Number(amountRef.current?.value).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
         <div>=</div>
-        <div className="text-green-500 flex items-center gap-2" >{Number(result).toFixed(2)} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+        <div className="text-green-500 flex items-center gap-2" >{Number(Number(result).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
       </div>
     }
   }
@@ -98,6 +98,8 @@ const Main = () => {
       buttonRef.current?.classList.add("disable-btn")
       buttonRef.current?.classList.remove("convert_btn")
     }
+
+    // set colours based on 
   }, [toCurrency, fromCurrency, resultStatus, input])
 
 
@@ -197,9 +199,7 @@ const Main = () => {
       {/* top section */}
       <div className="flex gap-[100px] items-center justify-center border-red-600 border-0">
         {/* ---Success--- */}
-        {/* <div className="flex"> */}
-
-        <p ref={popupRef} className=" z-10 text-gray-700 text-[12px] bg-green-200 shadow-lg font-[400] p-[15px] rounded-lg absolute opacity-0">Successfully Converted 50 USD to EUR </p>
+        <p ref={popupRef} className=" z-10 text-gray-700 text-[12px] bg-green-200 shadow-lg font-[400] p-[15px] rounded-lg absolute opacity-0">Successfully Converted {input} {fromCurrency} to {toCurrency} </p>
         {/* </div> */}
 
         {/* Input */}
