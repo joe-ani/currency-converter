@@ -12,7 +12,7 @@
 }
 
 .success-popup {
-   animation: popup 2s ease-in-out;
+   animation: popup 4s ease-in-out;
 }
 
 @keyframes popup {

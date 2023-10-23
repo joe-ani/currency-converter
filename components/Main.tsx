@@ -33,6 +33,8 @@ const Main = () => {
   const [initialize, setInitialize] = useState("OFF")
   const [resultStatus, setResultStatus] = useState("")
   const [allowConversion, SetAllowConversion] = useState(true)
+  const [toRateColor, setToRateColor] = useState("red")
+  const [fromRateColor, setFromRateColor] = useState("green")
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
@@ -69,7 +71,7 @@ const Main = () => {
       return <SkelentonLoader />
     } else if (result !== "" && initialize === "ON" || resultStatus === "done") {
       return <div className="flex gap-5">
-        <div className="text-red-500  flex items-center gap-2">{Number(amountRef.current?.value).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+        <div className="text-red-500  flex items-center gap-2">{Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
         <div>=</div>
         <div className="text-green-500 flex items-center gap-2" >{Number(Number(result).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
       </div>
@@ -97,6 +99,12 @@ const Main = () => {
       SetAllowConversion(false)
       buttonRef.current?.classList.add("disable-btn")
       buttonRef.current?.classList.remove("convert_btn")
+    }
+
+    if (Number(toRate) > Number(fromRate)) {
+      console.log("red")
+    } else {
+      console.log("green")
     }
 
     // set colours based on 
@@ -130,7 +138,8 @@ const Main = () => {
         popupRef.current?.classList.add("success-popup")
         setTimeout(() => {
           popupRef.current?.classList.remove("success-popup")
-        }, 2100)
+        }, 4000)
+
       } catch (error) {
         console.error('Error:', error);
       }
@@ -199,7 +208,7 @@ const Main = () => {
       {/* top section */}
       <div className="flex gap-[100px] items-center justify-center border-red-600 border-0">
         {/* ---Success--- */}
-        <p ref={popupRef} className=" z-10 text-gray-700 text-[12px] bg-green-200 shadow-lg font-[400] p-[15px] rounded-lg absolute opacity-0">Successfully Converted {input} {fromCurrency} to {toCurrency} </p>
+        <p ref={popupRef} className=" z-10 text-gray-700 text-[12px] bg-green-200 shadow-lg font-[400] p-[15px] rounded-lg absolute opacity-0">Successfully Converted {Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} {fromCurrency} to {toCurrency} </p>
         {/* </div> */}
 
         {/* Input */}
@@ -290,9 +299,9 @@ const Main = () => {
             {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
-              <div className="text-red-500  flex items-center gap-2">{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+              <div className={`text-${toRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
               <div>=</div>
-              <div className="text-green-500 flex items-center gap-2" >{Number(toRate).toFixed(3)} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+              <div className="text-green-500 flex items-center gap-2" >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
             </div>
           </div>
           {/* line */}
