@@ -28,6 +28,7 @@ const Main = () => {
   const [fromselectionActive, setFromSelectionActive] = useState(false)
   const [toselectionActive, setToSelectionActive] = useState(false)
   const [result, setResult] = useState("")
+  const [rate, setRate] = useState("")
   const [toRate, setToRate] = useState("")
   const [fromRate, setFromRate] = useState(1)
   const [initialize, setInitialize] = useState("OFF")
@@ -35,8 +36,9 @@ const Main = () => {
   const [allowConversion, SetAllowConversion] = useState(true)
   const [toRateColor, setToRateColor] = useState("red")
   const [fromRateColor, setFromRateColor] = useState("green")
-  const [toCurrencyColor, setToCurrencyColor] = useState("red")
-  const [fromCurrencyColor, setFromCurrencyColor] = useState("green")
+  const [toCurrencyColor, setToCurrencyColor] = useState("gray")
+  const [fromCurrencyColor, setFromCurrencyColor] = useState("gray")
+  const [converted, setConverted] = useState(false)
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
@@ -124,28 +126,35 @@ const Main = () => {
     setPrevToCurrency(toCurrency)
     setPrevInput(input)
     if (allowConversion) {
-      setResultStatus("in-progress")
-      console.log("allowed")
-      try {
-        const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
-        const axiosConfig = {
-          headers: {
-            'apikey': API_KEY
-          }
-        };
-        const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-        // Assuming your API returns JSON data, you can access it like this:
-        setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
-        // setInitialize("OFF")
-        setResultStatus("done")
-        setResult(response.data.result)
-        popupRef.current?.classList.add("success-popup")
-        setTimeout(() => {
-          popupRef.current?.classList.remove("success-popup")
-        }, 4000)
 
-      } catch (error) {
-        console.error('Error:', error);
+      if (converted) {
+        // run calculation
+        console.log("running calc...", fromRate, toRate, "->", input)
+      } else {
+        // api....
+        setResultStatus("in-progress")
+        console.log("allowed")
+        try {
+          const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
+          const axiosConfig = {
+            headers: {
+              'apikey': API_KEY
+            }
+          };
+          const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+          // Assuming your API returns JSON data, you can access it like this:
+          setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
+          // setInitialize("OFF")
+          setResultStatus("done")
+          setResult(response.data.result)
+          popupRef.current?.classList.add("success-popup")
+          setTimeout(() => {
+            popupRef.current?.classList.remove("success-popup")
+          }, 4000)
+
+        } catch (error) {
+          console.error('Error:', error);
+        }
       }
     } else {
       console.log("denied")
