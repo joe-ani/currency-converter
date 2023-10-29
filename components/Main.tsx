@@ -39,12 +39,13 @@ const Main = () => {
   const [toCurrencyColor, setToCurrencyColor] = useState("gray")
   const [fromCurrencyColor, setFromCurrencyColor] = useState("gray")
   const [converted, setConverted] = useState(false)
+  const [convertRate, setConvertRate] = useState("")
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
   const [input, setInput] = useState("")
   const [prevInput, setPrevInput] = useState("")
-
+  const [isModeOn, setIsModeOn] = useState(false);
 
 
   // https://flagcdn.com/16x12/{country}.png -->> Country Flag API 
@@ -66,6 +67,13 @@ const Main = () => {
     setFromCountryCode(toCountryCode)
     setToCurrency(fromCurrency)
     setToCountryCode(fromCountryCode)
+    setIsModeOn(!isModeOn);
+    if (isModeOn) {
+      setConvertRate(toRate)
+    } else {
+      const val: any = Number(fromRate) / Number(toRate)
+      setConvertRate(val)
+    }
   }
 
   const resultData = () => {
@@ -93,6 +101,12 @@ const Main = () => {
         buttonRef.current?.classList.add("disable-btn")
         buttonRef.current?.classList.remove("convert_btn")
       } else if (amountRef.current?.value !== "") {
+        // check if the currencies have been converted 
+        if (fromCurrency === prevToCurrency || toCurrency === prevFromCurrency) {
+          setConverted(true)
+        } else {
+          setConverted(false)
+        }
         console.log("allowing...")
         SetAllowConversion(true)
         buttonRef.current?.classList.remove("disable-btn")
@@ -129,7 +143,9 @@ const Main = () => {
 
       if (converted) {
         // run calculation
-        console.log("running calc...", fromRate, toRate, "->", input)
+        console.log("running calc...")
+        const calcValue: any = Number(input) * Number(convertRate)
+        setResult(calcValue)
       } else {
         // api....
         setResultStatus("in-progress")
@@ -312,9 +328,25 @@ const Main = () => {
             {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
-              <div className={`text-${toRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+              <div className={`flex items-center justify-center bg-${toRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`text-${toRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+                <Image 
+                    width={13}
+                    height={10}
+                    src="assets/RateArrow.svg"
+                    alt="arrow icon"
+                />
+              </div>
               <div>=</div>
-              <div className={`text-${fromRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+              <div className={`flex items-center justify-center bg-${fromRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`text-${fromRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+                <Image 
+                    width={13}
+                    height={10}
+                    src="assets/RateArrow.svg"
+                    alt="arrow icon"
+                />
+              </div>
             </div>
           </div>
           {/* line */}
