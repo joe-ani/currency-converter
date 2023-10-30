@@ -50,9 +50,11 @@ const Main = () => {
   const [isModeOn, setIsModeOn] = useState(false);
 
 
+  // *API's used in this project
   // https://flagcdn.com/16x12/{country}.png -->> Country Flag API 
   // https://api.apilayer.com/currency_currencyData/convert?to=USD&from=EUR& amount=20&  --header 'apikey: YOUR API KEY -->> Currency conversion API
 
+  // Set Selected Currency
   const updateToCurrency = (data: any) => {
     console.log(data.alpha2, data.currencyCode)
     setToCurrency(data.currencyCode)
@@ -64,6 +66,7 @@ const Main = () => {
     setFromCountryCode(data.alpha2.toLocaleLowerCase())
   }
 
+  // Switch Currencies
   const switchCurrencies = () => {
     setFromCurrency(toCurrency)
     setFromCountryCode(toCountryCode)
@@ -78,6 +81,7 @@ const Main = () => {
     }
   }
 
+  // Render Result 
   const resultData = () => {
     if (result === "" && initialize === "OFF") {
       return <p className="">Select The Currency of choice and amount to begin Conversion.</p>
@@ -137,10 +141,10 @@ const Main = () => {
       toArrowRef.current?.classList.remove("arrow-down")
       fromArrowRef.current?.classList.add("arrow-down")
     }
-
   }, [toCurrency, fromCurrency, resultStatus, input])
 
 
+  // On button Click Convert the rate 
   const convert = async () => {
     if (amountRef.current?.value !== "") {
       setInitialize("ON")
@@ -187,15 +191,12 @@ const Main = () => {
     }
   };
 
+  // omits use of letters and symbols form input
   const validateInput = () => {
     const inputValue: any = Number(amountRef.current?.value).toLocaleString()
     setInput(Number(amountRef.current?.value).toLocaleString())
-    // e.target.value =  Number(amountRef.current?.value).toLocaleString()
     const formattedValue = inputValue.toLocaleString();
-
-
     const numberPattern = /^[0-9]+$/;
-
     if (numberPattern.test(inputValue)) {
       console.log('Input contains only numbers:', inputValue);
       console.log('Formatted value:', formattedValue);
@@ -205,6 +206,7 @@ const Main = () => {
   }
 
 
+  // From Currency Selection Drop down Animation
   const openFromSelection = () => {
     // open DropDown
     if (fromselectionActive !== true) {
@@ -222,6 +224,7 @@ const Main = () => {
     }
   }
 
+  // To Currency Selection Drop down Animation
   const openToSelection = () => {
     // Open DropDown
     if (toselectionActive !== true) {
