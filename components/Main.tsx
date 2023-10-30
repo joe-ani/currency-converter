@@ -36,8 +36,8 @@ const Main = () => {
   const [initialize, setInitialize] = useState("OFF")
   const [resultStatus, setResultStatus] = useState("")
   const [allowConversion, SetAllowConversion] = useState(true)
-  const [toRateColor, setToRateColor] = useState("red")
-  const [fromRateColor, setFromRateColor] = useState("green")
+  const [toRateColor, setToRateColor] = useState("")
+  const [fromRateColor, setFromRateColor] = useState("")
   const [toCurrencyColor, setToCurrencyColor] = useState("gray")
   const [fromCurrencyColor, setFromCurrencyColor] = useState("gray")
   const [converted, setConverted] = useState(false)
@@ -125,10 +125,17 @@ const Main = () => {
     if (Number(toRate) < Number(fromRate)) {
       setToRateColor("green")
       setFromRateColor("red")
-      // fromArrowRef.current?.style.transform 
+      toArrowRef.current?.classList.add("arrow-down")
+      fromArrowRef.current?.classList.remove("arrow-down")
+      toArrowRef.current?.classList.remove("arrow-up")
+      fromArrowRef.current?.classList.add("arrow-up")
     } else {
       setToRateColor("red")
       setFromRateColor("green")
+      toArrowRef.current?.classList.add("arrow-up")
+      fromArrowRef.current?.classList.remove("arrow-up")
+      toArrowRef.current?.classList.remove("arrow-down")
+      fromArrowRef.current?.classList.add("arrow-down")
     }
 
   }, [toCurrency, fromCurrency, resultStatus, input])

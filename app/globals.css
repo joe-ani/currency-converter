@@ -15,6 +15,15 @@
    animation: popup 4s ease-in-out;
 }
 
+.arrow-up {
+   rotate: 180deg;
+   stroke: blue;
+}
+
+.arrow-down {
+   rotate: -180deg;
+}
+
 @keyframes popup {
    0% {
       top: 20px;
