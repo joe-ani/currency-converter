@@ -21,6 +21,8 @@ const Main = () => {
   const fromDropIconRef = useRef<HTMLImageElement>(null)
   const amountRef = useRef<HTMLInputElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const fromArrowRef = useRef<HTMLImageElement>(null)
+  const toArrowRef = useRef<HTMLImageElement>(null)
   const [fromCountryCode, setFromCountryCode] = useState("gb")
   const [toCountryCode, setToCountryCode] = useState("us")
   const [fromCurrency, setFromCurrency] = useState("GBP")
@@ -123,6 +125,7 @@ const Main = () => {
     if (Number(toRate) < Number(fromRate)) {
       setToRateColor("green")
       setFromRateColor("red")
+      // fromArrowRef.current?.style.transform 
     } else {
       setToRateColor("red")
       setFromRateColor("green")
@@ -328,23 +331,25 @@ const Main = () => {
             {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
-              <div className={`flex items-center justify-center bg-${toRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
-                <div className={`text-${toRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
-                <Image 
-                    width={13}
-                    height={10}
-                    src="assets/RateArrow.svg"
-                    alt="arrow icon"
+              <div className={`flex items-center justify-center bg-${fromRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`text-${fromRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+                <Image
+                  width={13}
+                  height={10}
+                  src="assets/RateArrow.svg"
+                  alt="arrow icon"
+                  ref={fromArrowRef}
                 />
               </div>
               <div>=</div>
-              <div className={`flex items-center justify-center bg-${fromRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
-                <div className={`text-${fromRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
-                <Image 
-                    width={13}
-                    height={10}
-                    src="assets/RateArrow.svg"
-                    alt="arrow icon"
+              <div className={`flex items-center justify-center bg-${toRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`text-${toRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+                <Image
+                  width={13}
+                  height={10}
+                  src="assets/RateArrow.svg"
+                  alt="arrow icon"
+                  ref={toArrowRef}
                 />
               </div>
             </div>
