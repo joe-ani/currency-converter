@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import SkelentonLoader from "./SkelentonLoader";
 import axios from "axios";
+import RateArrow from "../public/assets/RateArrow.svg"
 
 
 type CurrencyData = {
@@ -21,8 +22,8 @@ const Main = () => {
   const fromDropIconRef = useRef<HTMLImageElement>(null)
   const amountRef = useRef<HTMLInputElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
-  const fromArrowRef = useRef<HTMLImageElement>(null)
-  const toArrowRef = useRef<HTMLImageElement>(null)
+  const fromArrowRef = useRef<SVGSVGElement>(null)
+  const toArrowRef = useRef<SVGSVGElement>(null)
   const [fromCountryCode, setFromCountryCode] = useState("gb")
   const [toCountryCode, setToCountryCode] = useState("us")
   const [fromCurrency, setFromCurrency] = useState("GBP")
@@ -48,6 +49,7 @@ const Main = () => {
   const [input, setInput] = useState("")
   const [prevInput, setPrevInput] = useState("")
   const [isModeOn, setIsModeOn] = useState(false);
+  const RateArrowSVG = `<svg>${RateArrow}</svg>`
 
 
   // *API's used in this project
@@ -125,8 +127,13 @@ const Main = () => {
       buttonRef.current?.classList.remove("convert_btn")
     }
 
+  }, [toCurrency, fromCurrency, resultStatus, input])
+
+
+  useEffect(() => {
     // set colours based on rates and conversion
     if (Number(toRate) < Number(fromRate)) {
+      console.log("update 1")
       setToRateColor("green")
       setFromRateColor("red")
       toArrowRef.current?.classList.add("arrow-down")
@@ -134,6 +141,7 @@ const Main = () => {
       toArrowRef.current?.classList.remove("arrow-up")
       fromArrowRef.current?.classList.add("arrow-up")
     } else {
+      console.log("update 2")
       setToRateColor("red")
       setFromRateColor("green")
       toArrowRef.current?.classList.add("arrow-up")
@@ -141,8 +149,7 @@ const Main = () => {
       toArrowRef.current?.classList.remove("arrow-down")
       fromArrowRef.current?.classList.add("arrow-down")
     }
-  }, [toCurrency, fromCurrency, resultStatus, input])
-
+  }, [resultStatus])
 
   // On button Click Convert the rate 
   const convert = async () => {
@@ -341,26 +348,21 @@ const Main = () => {
             {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
-              <div className={`flex items-center justify-center bg-${fromRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
-                <div className={`text-${fromRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
-                <Image
-                  width={13}
-                  height={10}
-                  src="assets/RateArrow.svg"
-                  alt="arrow icon"
-                  ref={fromArrowRef}
-                />
+              <div className={`flex items-center justify-center bg-${fromRateColor ? { fromRateColor } : "green"}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`text-${fromRateColor ? { fromRateColor } : "green"}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+                <svg ref={fromArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.54169 2V13.0833" stroke={fromRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={fromRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </div>
               <div>=</div>
-              <div className={`flex items-center justify-center bg-${toRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
-                <div className={`text-${toRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
-                <Image
-                  width={13}
-                  height={10}
-                  src="assets/RateArrow.svg"
-                  alt="arrow icon"
-                  ref={toArrowRef}
-                />
+              <div className={`flex items-center justify-center bg-${toRateColor ? { toRateColor } : "red"}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`text-${toRateColor ? { toRateColor } : "red"}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+                <svg ref={toArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.54169 2V13.0833" stroke={toRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={toRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+
               </div>
             </div>
           </div>

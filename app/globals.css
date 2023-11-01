@@ -16,12 +16,11 @@
 }
 
 .arrow-up {
-   rotate: 180deg;
-   stroke: blue;
+   rotate: -180deg;
 }
 
 .arrow-down {
-   rotate: -180deg;
+   rotate: 360deg;
 }
 
 @keyframes popup {
