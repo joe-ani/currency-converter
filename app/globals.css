@@ -177,6 +177,21 @@ select option {
 
 
 
+/* .from-rate-cont {
+   filter: opacity(10%);
+}
+
+ 
+.from-rate-cont:nth-child(2)
+{
+   filter: opacity(100%);
+}
+
+.from-rate-text {
+   color: blue;
+} */
+
+
 
 @media only screen and (max-height: 600px) {
    .main-cont {

@@ -36,8 +36,8 @@ const Main = () => {
   const [initialize, setInitialize] = useState("OFF")
   const [resultStatus, setResultStatus] = useState("")
   const [allowConversion, SetAllowConversion] = useState(true)
-  const [toRateColor, setToRateColor] = useState("")
-  const [fromRateColor, setFromRateColor] = useState("")
+  const [fromRateColor, setFromRateColor] = useState("255, 0, 0")
+  const [toRateColor, setToRateColor] = useState("red")
   const [toCurrencyColor, setToCurrencyColor] = useState("gray")
   const [fromCurrencyColor, setFromCurrencyColor] = useState("gray")
   const [converted, setConverted] = useState(false)
@@ -131,9 +131,9 @@ const Main = () => {
   useEffect(() => {
     // set colours based on rates and conversion
     if (Number(toRate) < Number(fromRate)) {
-      console.log("update 1")
       setToRateColor("green")
       setFromRateColor("red")
+      console.log("update 1")
       toArrowRef.current?.classList.add("arrow-down")
       fromArrowRef.current?.classList.remove("arrow-down")
       toArrowRef.current?.classList.remove("arrow-up")
@@ -346,8 +346,8 @@ const Main = () => {
             {/* <SkelentonLoader /> */}
 
             <div className="flex gap-5">
-              <div className={`flex items-center justify-center bg-${fromRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
-                <div className={`text-${fromRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+              <div style={{ backgroundColor: `rgba(${fromRateColor}, 0.1)` }} className={`from-rate-cont flex items-center justify-center  px-[13px] py-[3px] rounded-full gap-1`}>
+                <div className={`from-rate-text text-${fromRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
                 <svg ref={fromArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7.54169 2V13.0833" stroke={fromRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                   <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={fromRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
