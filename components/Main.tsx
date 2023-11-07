@@ -37,7 +37,7 @@ const Main = () => {
   const [resultStatus, setResultStatus] = useState("")
   const [allowConversion, SetAllowConversion] = useState(true)
   const [fromRateColor, setFromRateColor] = useState("255, 0, 0")
-  const [toRateColor, setToRateColor] = useState("red")
+  const [toRateColor, setToRateColor] = useState("0, 225, 0")
   const [toCurrencyColor, setToCurrencyColor] = useState("gray")
   const [fromCurrencyColor, setFromCurrencyColor] = useState("gray")
   const [converted, setConverted] = useState(false)
@@ -354,7 +354,7 @@ const Main = () => {
                 </svg>
               </div>
               <div>=</div>
-              <div className={`flex items-center justify-center bg-${toRateColor}-100 px-[13px] py-[3px] rounded-full gap-1`}>
+              <div  style={{ backgroundColor: `rgba(${toRateColor}, 0.1)` }} className={`flex items-center justify-center  px-[13px] py-[3px] rounded-full gap-1`}>
                 <div className={`text-${toRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
                 <svg ref={toArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M7.54169 2V13.0833" stroke={toRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
