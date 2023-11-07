@@ -15,13 +15,6 @@
    animation: popup 4s ease-in-out;
 }
 
-.arrow-up {
-   rotate: -180deg;
-}
-
-.arrow-down {
-   rotate: 360deg;
-}
 
 @keyframes popup {
    0% {
@@ -42,7 +35,6 @@
       opacity: 0;
    }
 }
-
 
 
 
@@ -174,22 +166,6 @@ select option {
    background: #ccc;
    border-radius: 50px;
 }
-
-
-
-/* .from-rate-cont {
-   filter: opacity(10%);
-}
-
- 
-.from-rate-cont:nth-child(2)
-{
-   filter: opacity(100%);
-}
-
-.from-rate-text {
-   color: blue;
-} */
 
 
 

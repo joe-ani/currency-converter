@@ -36,12 +36,16 @@ const Main = () => {
   const [initialize, setInitialize] = useState("OFF")
   const [resultStatus, setResultStatus] = useState("")
   const [allowConversion, SetAllowConversion] = useState(true)
-  const [fromRateColor, setFromRateColor] = useState("255, 0, 0")
-  const [toRateColor, setToRateColor] = useState("0, 225, 0")
+  const [fromRateColor, setFromRateColor] = useState("0, 0, 0")
+  const [toRateColor, setToRateColor] = useState("0, 0, 0")
+  const [fromRateIconColor, setFromRateIconColor] = useState("")
+  const [toRateIconColor, setToRateIconColor] = useState("")
   const [toCurrencyColor, setToCurrencyColor] = useState("gray")
   const [fromCurrencyColor, setFromCurrencyColor] = useState("gray")
   const [converted, setConverted] = useState(false)
   const [convertRate, setConvertRate] = useState("")
+  const [fromAngle, setFromAngle] = useState("")
+  const [toAngle, setToAngle] = useState("")
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
@@ -130,22 +134,23 @@ const Main = () => {
 
   useEffect(() => {
     // set colours based on rates and conversion
-    if (Number(toRate) < Number(fromRate)) {
-      setToRateColor("green")
-      setFromRateColor("red")
+    if (Number(toRate) > Number(fromRate)) {
       console.log("update 1")
-      toArrowRef.current?.classList.add("arrow-down")
-      fromArrowRef.current?.classList.remove("arrow-down")
-      toArrowRef.current?.classList.remove("arrow-up")
-      fromArrowRef.current?.classList.add("arrow-up")
+      setToRateColor("225, 0, 0")
+      setFromRateColor("0, 225, 0")
+      setToRateIconColor("red")
+      setFromRateIconColor("green")
+      setToAngle("360")
+      setFromAngle("180")
     } else {
       console.log("update 2")
-      setToRateColor("red")
-      setFromRateColor("green")
-      toArrowRef.current?.classList.add("arrow-up")
-      fromArrowRef.current?.classList.remove("arrow-up")
-      toArrowRef.current?.classList.remove("arrow-down")
-      fromArrowRef.current?.classList.add("arrow-down")
+      setToRateColor("0, 225, 0")
+      setFromRateColor("225, 0, 0")
+      setToRateIconColor("green")
+      setFromRateIconColor("red")
+      setToAngle("180")
+      setFromAngle("360")
+
     }
   }, [resultStatus])
 
@@ -348,17 +353,17 @@ const Main = () => {
             <div className="flex gap-5">
               <div style={{ backgroundColor: `rgba(${fromRateColor}, 0.1)` }} className={`from-rate-cont flex items-center justify-center  px-[13px] py-[3px] rounded-full gap-1`}>
                 <div className={`from-rate-text text-${fromRateColor}-500  flex items-center gap-2`}>{Number(fromRate).toFixed(2)} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
-                <svg ref={fromArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.54169 2V13.0833" stroke={fromRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={fromRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <svg style={{ rotate: `${fromAngle}deg` }} ref={fromArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.54169 2V13.0833" stroke={fromRateIconColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={fromRateIconColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
               <div>=</div>
-              <div  style={{ backgroundColor: `rgba(${toRateColor}, 0.1)` }} className={`flex items-center justify-center  px-[13px] py-[3px] rounded-full gap-1`}>
+              <div style={{ backgroundColor: `rgba(${toRateColor}, 0.1)` }} className={`flex items-center justify-center  px-[13px] py-[3px] rounded-full gap-1`}>
                 <div className={`text-${toRateColor}-500 flex items-center gap-2`} >{toRate} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
-                <svg ref={toArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7.54169 2V13.0833" stroke={toRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={toRateColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <svg style={{ rotate: `${toAngle}deg` }} ref={toArrowRef} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.54169 2V13.0833" stroke={toRateIconColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={toRateIconColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
 
               </div>

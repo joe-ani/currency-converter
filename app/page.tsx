@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function Home() {
 
 
-  
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24 relative">
       {/* Header */}
@@ -25,16 +25,10 @@ export default function Home() {
         className='z-10 absolute left-[5%] top-[0%] w-[240px]'
       />
 
-        <Main />
+      <Main />
 
       {/* Footer */}
-      <Image
-        layout="fill"
-        objectFit="cover"
-        src="assets/Footer.svg"
-        alt='Footer'
-        className='mt-[42%] absolute'
-      />
+      <div className='bg-[#246DD6] w-[100%] h-[30px] absolute bottom-0 '/>
     </div>
   );
 }
