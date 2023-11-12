@@ -130,7 +130,8 @@ const Main = () => {
     }
 
     // set colours based on rates and conversion
-    if (Number(toRate) < Number(fromRate) || Number(fromRate) < Number(result)) {
+    if (Number(toRate) < Number(fromRate) || Number(fromRate) < Number(result)) { 
+      console.log(toRate)
       console.log("update 1")
       setToRateColor("0, 225, 0")
       setFromRateColor("225, 0, 0")
@@ -187,7 +188,7 @@ const Main = () => {
           };
           const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
           // Assuming your API returns JSON data, you can access it like this:
-          setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toFixed(2));
+          setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toLocaleString()); //.toFixed(2)
           // setInitialize("OFF")
           setResultStatus("done")
           setResult(response.data.result)
