@@ -23,9 +23,9 @@ const Main = () => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const fromArrowRef = useRef<SVGSVGElement>(null)
   const toArrowRef = useRef<SVGSVGElement>(null)
-  const [fromCountryCode, setFromCountryCode] = useState("gb")
+  const [fromCountryCode, setFromCountryCode] = useState("ng") //set this based on users location
+  const [fromCurrency, setFromCurrency] = useState("NGN") // set this based on users location
   const [toCountryCode, setToCountryCode] = useState("us")
-  const [fromCurrency, setFromCurrency] = useState("GBP")
   const [toCurrency, setToCurrency] = useState("USD") // Explict about Type String
   const [fromselectionActive, setFromSelectionActive] = useState(false)
   const [toselectionActive, setToSelectionActive] = useState(false)
@@ -88,7 +88,7 @@ const Main = () => {
   // Render Result 
   const resultData = () => {
     if (result === "" && initialize === "OFF") {
-      return <p className="">Select The Currency of choice and amount to begin Conversion.</p>
+      return <p className="">Set an amount and pick currencies.</p>
     } else if (result === "" && initialize === "ON" || resultStatus === "in-progress") {
       return <SkelentonLoader />
     } else if (result !== "" && initialize === "ON" || resultStatus === "done") {
@@ -129,29 +129,33 @@ const Main = () => {
       buttonRef.current?.classList.remove("convert_btn")
     }
 
-  }, [toCurrency, fromCurrency, resultStatus, input])
-
-
-  useEffect(() => {
     // set colours based on rates and conversion
-    if (Number(toRate) > Number(fromRate)) {
+    if (Number(toRate) < Number(fromRate) || Number(fromRate) < Number(result)) {
       console.log("update 1")
-      setToRateColor("225, 0, 0")
-      setFromRateColor("0, 225, 0")
-      setToRateIconColor("red")
-      setFromRateIconColor("green")
-      setToAngle("360")
-      setFromAngle("180")
-    } else {
-      console.log("update 2")
       setToRateColor("0, 225, 0")
       setFromRateColor("225, 0, 0")
       setToRateIconColor("green")
       setFromRateIconColor("red")
       setToAngle("180")
       setFromAngle("360")
-
+    } else if (Number(toRate) > Number(fromRate) || Number(fromRate) > Number(result)) {
+      console.log("update 2")
+      setToRateColor("225, 0, 0")
+      setToRateIconColor("red")
+      setFromRateColor("0, 225, 0")
+      setFromRateIconColor("green")
+      setToAngle("360")
+      setFromAngle("180")
+    } else {
+      setToRateColor("0, 0, 0")
+      setToRateIconColor("gray")
+      setFromRateColor("0, 0, 0")
+      setFromRateIconColor("gray")
     }
+  }, [toCurrency, fromCurrency, resultStatus, input])
+
+
+  useEffect(() => {
   }, [resultStatus])
 
   // On button Click Convert the rate 
