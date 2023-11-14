@@ -166,6 +166,9 @@ select option {
    background: #ccc;
    border-radius: 50px;
 }
+svg {
+   transition: 400ms ease-in-out;
+}
 
 
 

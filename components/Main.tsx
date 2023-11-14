@@ -46,6 +46,7 @@ const Main = () => {
   const [convertRate, setConvertRate] = useState("")
   const [fromAngle, setFromAngle] = useState("")
   const [toAngle, setToAngle] = useState("")
+  const [switched, setSwitched] = useState(false)
   // --------------------------------
   const [prevFromCurrency, setPrevFromCurrency] = useState("")
   const [prevToCurrency, setPrevToCurrency] = useState("")
@@ -77,6 +78,7 @@ const Main = () => {
     setToCurrency(fromCurrency)
     setToCountryCode(fromCountryCode)
     setIsModeOn(!isModeOn);
+
     if (isModeOn) {
       setConvertRate(toRate)
     } else {
@@ -130,8 +132,8 @@ const Main = () => {
     }
 
     // set colours based on rates and conversion
-    if (Number(toRate) < Number(result2) || Number(result2) < Number(toRate)) {
-      console.log(result2, toRate)
+    if (Number(fromRate) > Number(toRate) || Number(fromRate) < Number(result2)) {
+      console.log(`${fromRate}NGN -> ${toRate}USD, ${fromRate}USD -> ${result2}NGN`)
       console.log("update 1")
       setToRateColor("0, 225, 0")
       setFromRateColor("225, 0, 0")
@@ -139,7 +141,7 @@ const Main = () => {
       setFromRateIconColor("red")
       setToAngle("180")
       setFromAngle("360")
-    } else if (Number(toRate) > Number(result2) || Number(result2) > Number(toRate)) {
+    } else if (Number(fromRate) < Number(toRate) || Number(fromRate) > Number(result2)) {
       console.log("update 2")
       setToRateColor("225, 0, 0")
       setFromRateColor("0, 225, 0")
@@ -176,31 +178,42 @@ const Main = () => {
       //   const calcValue: any = Number(input) * Number(convertRate)
       //   setResult(calcValue)
       // } else {
-        // api....
-        setResultStatus("in-progress")
-        console.log("allowed")
-        try {
-          const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
-          const axiosConfig = {
-            headers: {
-              'apikey': API_KEY
-            }
-          };
-          const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-          const switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-          setResult2((Number(switchResponse.data.result) / Number(amountRef.current?.value)).toLocaleString())
-          // Assuming your API returns JSON data, you can access it like this:
-          setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toLocaleString()); //.toFixed(2)
-          // setInitialize("OFF")
-          setResultStatus("done")
-          setResult(response.data.result)
-          popupRef.current?.classList.add("success-popup")
-          setTimeout(() => {
-            popupRef.current?.classList.remove("success-popup")
-          }, 4000)
+      // api....
+      setResultStatus("in-progress")
+      console.log("allowed")
+      try {
+        const API_KEY = "PAYm8V31jag923Q0gOD5NXr4bUKKzja5";
+        const axiosConfig = {
+          headers: {
+            'apikey': API_KEY
+          }
+        };
 
-        } catch (error) {
-          console.error('Error:', error);
+        // Make the api fetching dynamic based on if the user switched currencies
+
+        let response;
+        let switchResponse;
+        if (!isModeOn) {
+          response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+          switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+
+        } else {
+          response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+          switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+        }
+        setResult2((Number(switchResponse.data.result) / Number(amountRef.current?.value)).toLocaleString())
+        // Assuming your API returns JSON data, you can access it like this:
+        setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toLocaleString()); //.toFixed(2)
+        // setInitialize("OFF")
+        setResultStatus("done")
+        setResult(response.data.result)
+        popupRef.current?.classList.add("success-popup")
+        setTimeout(() => {
+          popupRef.current?.classList.remove("success-popup")
+        }, 4000)
+
+      } catch (error) {
+        console.error('Error:', error);
         // }
       }
     } else {
@@ -371,7 +384,6 @@ const Main = () => {
                   <path d="M7.54169 2V13.0833" stroke={toRateIconColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                   <path d="M13.0833 7.54169L7.54167 13.0834L2 7.54169" stroke={toRateIconColor} stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-
               </div>
             </div>
           </div>
