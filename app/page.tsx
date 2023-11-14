@@ -25,10 +25,10 @@ export default function Home() {
         className='z-10 absolute left-[5%] top-[0%] w-[240px]'
       />
 
-      <Main />
+      <Main  />
 
       {/* Footer */}
-      <div className='bg-[#246DD6] w-[100%] h-[30px] absolute bottom-0 '/>
+      <div className='bg-[#246DD6] w-[100%] h-[30px] fixed bottom-0 shadow-lg'/>
     </div>
   );
 }

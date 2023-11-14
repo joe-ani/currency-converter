@@ -269,7 +269,7 @@ const Main = () => {
 
   return (
     <div
-      className="main-cont w-[65%] p-[80px] bg-white rounded-[30px] border-[2px] border-black-500 shadow-lg absolute top-[150px]"
+      className="main-cont w-[65%] p-[80px] bg-white rounded-[30px] border-[2px] border-black-500 shadow-lg absolute top-[150px] "
     >
       {/* top section */}
       <div className="flex gap-[15px] flex-col items-start justify-center border-red-600 border-0 lg:gap-[100px] lg:flex-row lg:items-center">
@@ -352,10 +352,10 @@ const Main = () => {
 
 
       {/* Lower container*/}
-      <div className="flex items-center justify-between mt-[50px] mx-[55px]  border-red-600 border-0" >
+      <div className="flex items-center flex-col-reverse justify-between gap-[40px] md:gap-0 mt-[100px] mx-[55px] md:mt-[50px] md:flex-row" >
 
         {/* output */}
-        <div className="flex flex-col gap-3 w-[300px]  border-red-600 border-0">
+        <div className="flex flex-col gap-3 w-[300px]">
           {/* line */}
           <div className="w-[100%] h-[2px] bg-gray-200 "></div>
           {/* toRates */}
