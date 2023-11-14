@@ -259,7 +259,6 @@ const Main = () => {
     }
   }
 
-
   return (
     <div
       className="main-cont w-[65%] p-[80px] bg-white rounded-[30px] border-[2px] border-black-500 shadow-lg absolute top-[150px]"
