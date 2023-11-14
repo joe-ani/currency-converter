@@ -30,7 +30,7 @@ const Main = () => {
   const [fromselectionActive, setFromSelectionActive] = useState(false)
   const [toselectionActive, setToSelectionActive] = useState(false)
   const [result, setResult] = useState("")
-  const [rate, setRate] = useState("")
+  const [result2, setResult2] = useState("")
   const [toRate, setToRate] = useState("")
   const [fromRate, setFromRate] = useState(1)
   const [initialize, setInitialize] = useState("OFF")
@@ -130,8 +130,8 @@ const Main = () => {
     }
 
     // set colours based on rates and conversion
-    if (Number(toRate) < Number(fromRate) || Number(fromRate) < Number(result)) { 
-      console.log(toRate)
+    if (Number(toRate) < Number(result2) || Number(result2) < Number(toRate)) {
+      console.log(result2, toRate)
       console.log("update 1")
       setToRateColor("0, 225, 0")
       setFromRateColor("225, 0, 0")
@@ -139,11 +139,11 @@ const Main = () => {
       setFromRateIconColor("red")
       setToAngle("180")
       setFromAngle("360")
-    } else if (Number(toRate) > Number(fromRate) || Number(fromRate) > Number(result)) {
+    } else if (Number(toRate) > Number(result2) || Number(result2) > Number(toRate)) {
       console.log("update 2")
       setToRateColor("225, 0, 0")
-      setToRateIconColor("red")
       setFromRateColor("0, 225, 0")
+      setToRateIconColor("red")
       setFromRateIconColor("green")
       setToAngle("360")
       setFromAngle("180")
@@ -170,12 +170,12 @@ const Main = () => {
     setPrevInput(input)
     if (allowConversion) {
 
-      if (converted) {
-        // run calculation
-        console.log("running calc...")
-        const calcValue: any = Number(input) * Number(convertRate)
-        setResult(calcValue)
-      } else {
+      // if (converted) {
+      //   // run calculation
+      //   console.log("running calc...")
+      //   const calcValue: any = Number(input) * Number(convertRate)
+      //   setResult(calcValue)
+      // } else {
         // api....
         setResultStatus("in-progress")
         console.log("allowed")
@@ -187,6 +187,8 @@ const Main = () => {
             }
           };
           const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+          const switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+          setResult2((Number(switchResponse.data.result) / Number(amountRef.current?.value)).toLocaleString())
           // Assuming your API returns JSON data, you can access it like this:
           setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toLocaleString()); //.toFixed(2)
           // setInitialize("OFF")
@@ -199,7 +201,7 @@ const Main = () => {
 
         } catch (error) {
           console.error('Error:', error);
-        }
+        // }
       }
     } else {
       console.log("denied")
