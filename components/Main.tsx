@@ -23,10 +23,10 @@ const Main = () => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const fromArrowRef = useRef<SVGSVGElement>(null)
   const toArrowRef = useRef<SVGSVGElement>(null)
-  const [fromCountryCode, setFromCountryCode] = useState("ng") //set this based on users location
-  const [fromCurrency, setFromCurrency] = useState("NGN") // set this based on users location
-  const [toCountryCode, setToCountryCode] = useState("us")
-  const [toCurrency, setToCurrency] = useState("USD") // Explict about Type String
+  const [fromCountryCode, setFromCountryCode] = useState("us") //set this based on users location
+  const [fromCurrency, setFromCurrency] = useState("USD") // set this based on users location
+  const [toCountryCode, setToCountryCode] = useState("ng")
+  const [toCurrency, setToCurrency] = useState("NGN") // Explict about Type String
   const [fromselectionActive, setFromSelectionActive] = useState(false)
   const [toselectionActive, setToSelectionActive] = useState(false)
   const [result, setResult] = useState("")
@@ -95,9 +95,9 @@ const Main = () => {
       return <SkelentonLoader />
     } else if (result !== "" && initialize === "ON" || resultStatus === "done") {
       return <div className="flex gap-5">
-        <div className={`text-${fromCurrencyColor}-500  flex items-center gap-2`}>{Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{fromCurrency}</div></div>
+        <div className="text-gray-500  flex items-center gap-2">{Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} <div style={{ color: fromCurrencyColor }} className="text-gray-600 font-[600]">{fromCurrency}</div></div>
         <div>=</div>
-        <div className={`text-${toCurrencyColor}-500 flex items-center gap-2`}>{Number(Number(result).toFixed(2)).toLocaleString()} <div className="text-gray-600 font-[600]">{toCurrency}</div></div>
+        <div className="text-gray-500 flex items-center gap-2">{Number(Number(result).toFixed(2)).toLocaleString()} <div style={{ color: toCurrencyColor }} className="text-gray-600 font-[600]">{toCurrency}</div></div>
       </div>
     }
   }
@@ -139,6 +139,8 @@ const Main = () => {
       setFromRateColor("225, 0, 0")
       setToRateIconColor("green")
       setFromRateIconColor("red")
+      setToCurrencyColor("green")
+      setFromCurrencyColor("red")
       setToAngle("180")
       setFromAngle("360")
     } else if (Number(fromRate) < Number(toRate)) {
@@ -147,6 +149,8 @@ const Main = () => {
       setFromRateColor("0, 225, 0")
       setToRateIconColor("red")
       setFromRateIconColor("green")
+      setToCurrencyColor("red")
+      setFromCurrencyColor("green")
       setToAngle("360")
       setFromAngle("180")
     } else {
