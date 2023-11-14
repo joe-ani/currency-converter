@@ -133,7 +133,7 @@ const Main = () => {
 
     // set colours based on rates and conversion
     if (Number(fromRate) > Number(toRate) && toRate !== "") {
-      console.log("update 1", toRate)
+      console.log("update 1")
       setToRateColor("0, 225, 0")
       setFromRateColor("225, 0, 0")
       setToRateIconColor("green")
