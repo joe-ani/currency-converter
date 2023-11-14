@@ -278,18 +278,18 @@ const Main = () => {
         {/* </div> */}
 
         {/* Input */}
-        <div className="flex flex-col ">
+        <div className="flex flex-col w-full sm:w-[250px]">
           <p className="font-[600] text-gray-700 select-none">Amount</p>
-          <input ref={amountRef} onChange={validateInput} type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none " />
+          <input ref={amountRef} onChange={validateInput} type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none" />
         </div>
 
         <div className="flex flex-col items-center justify-center w-full relative sm:gap-9 sm:flex-row">
           {/* First Dropdown */}
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full relative sm:w-[150px]">
             <p className="font-[600] text-gray-700 select-none">From</p>
 
             {/* Curency selection*/}
-            <div onClick={openFromSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 z-20 w-full left-0 absolute sm:relative sm:w-[150px]">
+            <div onClick={openFromSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 z-20 w-full top-[30px] sm:top-0 left-0 absolute sm:relative sm:w-[150px]">
               <div className="flex items-center justify-center gap-1 ">
                 <Image width={17} height={10} src={`https://flagcdn.com/16x12/${fromCountryCode}.png`} alt="country flag" />
                 <div className="select-none">{fromCurrency}</div>
@@ -312,7 +312,7 @@ const Main = () => {
           </div>
 
           {/* switch icon */}
-          <div onClick={switchCurrencies} className=" flex items-center justify-center w-[35px] h-[35px] border-2 rounded-full mt-5 p-[7px] cursor-pointer hover:bg-[#e6e6e6] scale-[1.1] transition-all active:scale-[.9]">
+          <div onClick={switchCurrencies} className=" flex items-center justify-center w-[35px] h-[35px] border-2 rounded-full mt-[70px] sm:mt-5 p-[7px] cursor-pointer hover:bg-[#e6e6e6] scale-[1.1] transition-all active:scale-[.9] rotate-90 sm:rotate-0">
             <Image
               width={100}
               height={100}
@@ -322,11 +322,11 @@ const Main = () => {
           </div>
 
           {/* Second Dropdown */}
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full relative sm:w-[150px]  sm:mt-0">
             <p className="font-[600] text-gray-700 select-none">To</p>
 
             {/* Curency selection*/}
-            <div onClick={openToSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 w-full left-0 absolute sm:relative sm:w-[150px]">
+            <div onClick={openToSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 w-full top-[30px] sm:top-0 left-0 absolute sm:relative sm:w-[150px]">
               <div className="flex items-center justify-center gap-1 ">
                 <Image width={17} height={10} src={`https://flagcdn.com/16x12/${toCountryCode}.png`} alt="country flag" />
                 <div className="select-none">{toCurrency}</div>
