@@ -183,6 +183,10 @@ svg {
 @media (min-width: 90%) and (max-width: 100%) {
    .convert_btn {
       display: none;
-
    }
+}
+
+
+@media only screen and (max-width: 1000px) {
+
 }

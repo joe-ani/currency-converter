@@ -272,7 +272,7 @@ const Main = () => {
       className="main-cont w-[65%] p-[80px] bg-white rounded-[30px] border-[2px] border-black-500 shadow-lg absolute top-[150px]"
     >
       {/* top section */}
-      <div className="flex gap-[100px] items-center justify-center border-red-600 border-0">
+      <div className="flex gap-[15px] flex-col items-start justify-center border-red-600 border-0 lg:gap-[100px] lg:flex-row lg:items-center">
         {/* ---Success--- */}
         <p ref={popupRef} className=" z-10 text-gray-700 text-[12px] bg-green-200 shadow-lg font-[400] p-[15px] rounded-lg absolute opacity-0">Successfully Converted {Number(Number(amountRef.current?.value).toFixed(2)).toLocaleString()} {fromCurrency} to {toCurrency} </p>
         {/* </div> */}
@@ -283,13 +283,13 @@ const Main = () => {
           <input ref={amountRef} onChange={validateInput} type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none " />
         </div>
 
-        <div className="flex items-center justify-center gap-9">
+        <div className="flex flex-col items-center justify-center w-full relative sm:gap-9 sm:flex-row">
           {/* First Dropdown */}
           <div className="flex flex-col">
             <p className="font-[600] text-gray-700 select-none">From</p>
 
             {/* Curency selection*/}
-            <div onClick={openFromSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 z-20 w-[150px] relative">
+            <div onClick={openFromSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 z-20 w-full left-0 absolute sm:relative sm:w-[150px]">
               <div className="flex items-center justify-center gap-1 ">
                 <Image width={17} height={10} src={`https://flagcdn.com/16x12/${fromCountryCode}.png`} alt="country flag" />
                 <div className="select-none">{fromCurrency}</div>
@@ -326,7 +326,7 @@ const Main = () => {
             <p className="font-[600] text-gray-700 select-none">To</p>
 
             {/* Curency selection*/}
-            <div onClick={openToSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 w-[150px] relative">
+            <div onClick={openToSelection} className="flex justify-between cursor-pointer rounded-md p-[10px] bg-[#fff] border-2 border-gray-200 w-full left-0 absolute sm:relative sm:w-[150px]">
               <div className="flex items-center justify-center gap-1 ">
                 <Image width={17} height={10} src={`https://flagcdn.com/16x12/${toCountryCode}.png`} alt="country flag" />
                 <div className="select-none">{toCurrency}</div>
