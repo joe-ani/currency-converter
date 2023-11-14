@@ -132,7 +132,7 @@ const Main = () => {
     }
 
     // set colours based on rates and conversion
-    if (Number(fromRate) > Number(toRate) || Number(fromRate) < Number(result2)) {
+    if (Number(fromRate) > Number(toRate)) {
       console.log(`${fromRate}NGN -> ${toRate}USD, ${fromRate}USD -> ${result2}NGN`)
       console.log("update 1")
       setToRateColor("0, 225, 0")
@@ -141,7 +141,7 @@ const Main = () => {
       setFromRateIconColor("red")
       setToAngle("180")
       setFromAngle("360")
-    } else if (Number(fromRate) < Number(toRate) || Number(fromRate) > Number(result2)) {
+    } else if (Number(fromRate) < Number(toRate)) {
       console.log("update 2")
       setToRateColor("225, 0, 0")
       setFromRateColor("0, 225, 0")
@@ -190,18 +190,10 @@ const Main = () => {
         };
 
         // Make the api fetching dynamic based on if the user switched currencies
+        const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+        // switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
+        // setResult2((Number(switchResponse.data.result) / Number(amountRef.current?.value)).toLocaleString())
 
-        let response;
-        let switchResponse;
-        if (!isModeOn) {
-          response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-          switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-
-        } else {
-          response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-          switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-        }
-        setResult2((Number(switchResponse.data.result) / Number(amountRef.current?.value)).toLocaleString())
         // Assuming your API returns JSON data, you can access it like this:
         setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toLocaleString()); //.toFixed(2)
         // setInitialize("OFF")
