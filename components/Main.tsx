@@ -194,8 +194,6 @@ const Main = () => {
 
         // Make the api fetching dynamic based on if the user switched currencies
         const response = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-        // switchResponse = await axios.get(`https://api.apilayer.com/currency_data/convert?to=${fromCurrency}&from=${toCurrency}&amount=${amountRef.current?.value}`, axiosConfig);
-        // setResult2((Number(switchResponse.data.result) / Number(amountRef.current?.value)).toLocaleString())
 
         // Assuming your API returns JSON data, you can access it like this:
         setToRate((Number(response.data.result) / Number(amountRef.current?.value)).toLocaleString()); //.toFixed(2)
