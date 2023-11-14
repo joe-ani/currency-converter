@@ -132,9 +132,8 @@ const Main = () => {
     }
 
     // set colours based on rates and conversion
-    if (Number(fromRate) > Number(toRate)) {
-      console.log(`${fromRate}NGN -> ${toRate}USD, ${fromRate}USD -> ${result2}NGN`)
-      console.log("update 1")
+    if (Number(fromRate) > Number(toRate) && toRate !== "") {
+      console.log("update 1", toRate)
       setToRateColor("0, 225, 0")
       setFromRateColor("225, 0, 0")
       setToRateIconColor("green")
@@ -143,7 +142,7 @@ const Main = () => {
       setFromCurrencyColor("red")
       setToAngle("180")
       setFromAngle("360")
-    } else if (Number(fromRate) < Number(toRate)) {
+    } else if (Number(fromRate) < Number(toRate) && toRate !== "") {
       console.log("update 2")
       setToRateColor("225, 0, 0")
       setFromRateColor("0, 225, 0")
