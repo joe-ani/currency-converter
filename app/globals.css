@@ -166,6 +166,7 @@ select option {
    background: #ccc;
    border-radius: 50px;
 }
+
 svg {
    transition: 400ms ease-in-out;
 }
@@ -180,6 +181,22 @@ svg {
    }
 }
 
+@media only screen and (min-height: 600px) {
+   .main-cont {
+      /* height: 75%; */
+      top: 100px;
+      /* width: 70%; */
+   }
+}
+
+@media only screen and (min-height: 700px) {
+   .main-cont {
+      /* height: 450px; */
+      top: 150px;
+      /* width: 65%; */
+   }
+}
+
 @media (min-width: 90%) and (max-width: 100%) {
    .convert_btn {
       display: none;
@@ -187,6 +204,4 @@ svg {
 }
 
 
-@media only screen and (max-width: 1000px) {
-
-}
+@media only screen and (max-width: 1000px) {}
