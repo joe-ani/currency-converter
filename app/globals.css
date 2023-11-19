@@ -171,6 +171,45 @@ svg {
    transition: 400ms ease-in-out;
 }
 
+.icon-cont {
+   margin-left: 130px;
+}
+
+.link-cont {
+   animation: slide-in 300ms ease-in-out;
+}
+.link-cont-close {
+   animation: slide-out 200ms ease-in-out;
+}
+
+.remove {
+   display: none;
+}
+
+@keyframes slide-in {
+   0% {
+      opacity: 0;
+      margin-left: -10px;
+   }
+
+   
+   100% {
+      opacity: 1;
+      margin-left: 0px;
+   }
+}
+
+@keyframes slide-out {
+   0% {
+      opacity: 1;
+      margin-left: 0px;
+   }
+   100% {
+      opacity: 0;
+      margin-left: -10px;
+   }
+}
+
 
 
 @media only screen and (max-height: 600px) {
@@ -185,6 +224,7 @@ svg {
    .main-cont {
       /* height: 75%; */
       top: 100px;
+
       /* width: 70%; */
    }
 }

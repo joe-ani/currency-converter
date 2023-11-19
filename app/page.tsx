@@ -1,4 +1,5 @@
 import Main from '@/components/Main';
+import MyLink from '@/components/MyLink';
 import Image from 'next/image';
 
 export default function Home() {
@@ -6,12 +7,12 @@ export default function Home() {
 
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24 relative">
+    <div className="flex min-h-screen flex-col items-center justify-between p-24 ">
       {/* Header */}
       <Image
         layout="fill"
         objectFit="cover"
-        className='mt-[-10%] z-[-10 absolute'
+        className='mt-[-10%]'
         src="/assets/Header.svg"
         alt="Header"
       />
@@ -25,10 +26,11 @@ export default function Home() {
         className='z-10 absolute left-[5%] top-[0%] w-[240px]'
       />
 
-      <Main  />
+      <Main />
 
+      <MyLink />
       {/* Footer */}
-      <div className='bg-[#246DD6] w-[100%] h-[30px] fixed bottom-0 shadow-lg'/>
+      <div className='bg-[#246DD6] w-[100%] h-[30px] fixed bottom-0 shadow-lg' />
     </div>
   );
 }
