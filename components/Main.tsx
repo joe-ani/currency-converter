@@ -78,6 +78,7 @@ const Main = () => {
     setToCurrency(fromCurrency)
     setToCountryCode(fromCountryCode)
     setIsModeOn(!isModeOn);
+    
 
     if (isModeOn) {
       setConvertRate(toRate)

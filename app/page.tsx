@@ -1,3 +1,4 @@
+import InfoModal from '@/components/InfoModal';
 import Main from '@/components/Main';
 import MyLink from '@/components/MyLink';
 import Image from 'next/image';
@@ -8,7 +9,9 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24 ">
-    
+
+      <InfoModal />
+
 
       {/* Header */}
       <Image
