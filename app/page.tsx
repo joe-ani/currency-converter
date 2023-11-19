@@ -8,6 +8,8 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24 ">
+    
+
       {/* Header */}
       <Image
         layout="fill"
@@ -31,6 +33,7 @@ export default function Home() {
       <MyLink />
       {/* Footer */}
       <div className='bg-[#246DD6] w-[100%] h-[30px] fixed bottom-0 shadow-lg' />
+
     </div>
   );
 }

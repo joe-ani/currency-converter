@@ -190,12 +190,14 @@ svg {
    0% {
       opacity: 0;
       margin-left: -10px;
+      scale: 0;
    }
 
    
    100% {
       opacity: 1;
       margin-left: 0px;
+      scale: 1;
    }
 }
 
@@ -203,10 +205,12 @@ svg {
    0% {
       opacity: 1;
       margin-left: 0px;
+      scale: 1;
    }
    100% {
       opacity: 0;
       margin-left: -10px;
+      scale: 0;
    }
 }
 
