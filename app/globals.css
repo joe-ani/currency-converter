@@ -178,6 +178,7 @@ svg {
 .link-cont {
    animation: slide-in 300ms ease-in-out;
 }
+
 .link-cont-close {
    animation: slide-out 200ms ease-in-out;
 }
@@ -193,7 +194,7 @@ svg {
       scale: 0;
    }
 
-   
+
    100% {
       opacity: 1;
       margin-left: 0px;
@@ -207,6 +208,7 @@ svg {
       margin-left: 0px;
       scale: 1;
    }
+
    100% {
       opacity: 0;
       margin-left: -10px;
@@ -214,6 +216,23 @@ svg {
    }
 }
 
+.show {
+   display: flex;
+}
+
+.bg-animate-in {
+   animation: bg-animation 300ms linear;
+}
+
+@keyframes bg-animation {
+   from {
+      opacity: 0;
+   }
+
+   to {
+      opacity: 1;
+   }
+}
 
 
 @media only screen and (max-height: 600px) {

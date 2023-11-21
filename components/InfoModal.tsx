@@ -1,32 +1,57 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 
 const InfoModal = () => {
-    const [state, setstate] = useState()
+    const [toggle, setToggle] = useState(false)
+    const bgRef = useRef<HTMLDivElement>(null)
+    const mainRef = useRef<HTMLDivElement>(null)
+    const contRef = useRef<HTMLDivElement>(null)
+
+    const toggleModal = () => {
+        setToggle(!toggle)
+        if (toggle) {
+            bgRef.current?.classList.add("")
+            contRef.current?.classList.add("")
+            setTimeout(() => {
+                mainRef.current?.classList.add("show")
+            }, 300)
+        } else {
+            mainRef.current?.classList.add("remove")
+            bgRef.current?.classList.add("")
+            contRef.current?.classList.add("")
+        }
+    }
 
     return (
-        <div className="flex items-center justify-center z-50 absolute top-0 left-0 w-full h-full bg-[#5c5c5c61] backdrop-blur-sm ">
+        <div ref={mainRef} className="hidden items-center justify-center">
+            {/* Blurred BG */}
+            <div ref={bgRef} onClick={toggleModal} className="blurred-bg absolute top-0 left-0 w-full h-full bg-[#5c5c5c61] backdrop-blur-sm z-30"></div>
 
-            <div className="flex gap-3 bg-[#fff] rounded-lg border-[#b5b5b5] border-[3px] p-[30px] shadow-sm">
+            {/* Main about container */}
+            <div ref={contRef} className="main-about-cont flex gap-3 bg-[#fff] rounded-xl border-[#cacaca] border-[2px] p-[40px] shadow-sm z-50 absolute top-[30%] ">
                 {/* Left */}
                 <div className="flex flex-col items-center justify-center">
                     {/* Image */}
                     <Image width={70} height={10} alt="" src="/assets/mypicRounded.png " className="transition-all active:scale-[.9] z-10 " />
                     {/* User Name */}
-                     <div>Joseph Ani</div>
+                    <div>Joseph Ani</div>
                 </div>
                 {/* Line */}
-                <div className="w-[2px] h-[100px] bg-[gray]"></div>
+                <div className="w-[2px] h-[100px] bg-[#0000001c]"></div>
                 {/* Right */}
                 <div className="flex items-start justify-center flex-col gap-[10px]">
                     {/* Links */}
-                    <div className=" p-[10px] bg-[gray] rounded-full border-[gray] border-[3px] px-[20px] py-[5px] transition-all active:scale-[.9] cursor-pointer" >
-                        <Image width={10} height={10} alt="" src="" />
-                        My Portfolio</div> 
-                    <div className=" p-[10px] bg-[gray] rounded-full border-[gray] border-[3px] px-[20px] py-[5px] transition-all active:scale-[.9] cursor-pointer" >Git Repository</div> 
+                    <a href="/" target="_blank" className="flex gap-2 p-[10px] bg-[#f3f3f3] rounded-full border-[#cacaca] border-[3px] px-[20px] py-[5px] transition-all active:scale-[.9] cursor-pointer active:border-[gray] hover:bg-[#dddddd] select-none" >
+                        <Image width={20} height={10} alt="" src="/assets/link-alt-1-svgrepo-com.svg" />
+                        My Portfolio
+                    </a>
+                    <a href="https://github.com/joe-ani/currency-converter" target="_blank" className="flex gap-2 p-[10px] bg-[#f3f3f3] rounded-full border-[#cacaca] border-[3px] px-[20px] py-[5px] transition-all active:scale-[.9] cursor-pointer active:border-[gray] hover:bg-[#dddddd] select-none" >
+                        <Image width={20} height={10} alt="" src="/assets/git-merge-svgrepo-com (1).svg" />
+                        Git Repository
+                    </a>
                 </div>
 
             </div>
