@@ -11,7 +11,7 @@ const MyLink = () => {
     // const [containerDisplay, setContainerDisplay] = useState("flex")
     const linkContRef = useRef<HTMLDivElement>(null)
     const iconContRef = useRef<HTMLDivElement>(null)
-    const { loading } = useContext(StateGlobalContext)
+    const { setModalState } = useContext(StateGlobalContext)
 
 
     const toggleLink = () => {
@@ -34,6 +34,11 @@ const MyLink = () => {
     }
 
 
+    const showModal = () => {
+        setModalState(true)
+    }
+
+
     return (
         <div className="flex gap-3 items-center justify-center z-10 fixed bottom-10 left-10 cursor-pointer">
             {/* Image */}
@@ -41,7 +46,7 @@ const MyLink = () => {
 
                 <Image onClick={toggleLink} width={45} height={10} alt="" src="/assets/mypicRounded.png " className="transition-all active:scale-[.9] z-10 " />
                 {/* Text container */}
-                <div ref={linkContRef} className="remove transition-all flex items-center justify-center gap-2 bg-[#0000001c] backdrop-blur-sm text-[#3a3a3a] border-[#00000013] border-2 rounded-full p-1 px-5 absolute shadow-xl hover:bg-[#4d4d4d1c] select-none active:border-[#8d8d8d] active:scale-[.9]">
+                <div ref={linkContRef} onClick={showModal} className="remove transition-all flex items-center justify-center gap-2 bg-[#0000001c] backdrop-blur-sm text-[#3a3a3a] border-[#00000013] border-2 rounded-full p-1 px-5 absolute shadow-xl hover:bg-[#4d4d4d1c] select-none active:border-[#8d8d8d] active:scale-[.9]">
                     {/* Info Icon */}
                     Developer
                 </div>

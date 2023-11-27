@@ -233,6 +233,19 @@ svg {
       opacity: 1;
    }
 }
+.bg-animate-out {
+   animation: bg-animation 300ms linear;
+}
+
+@keyframes bg-out-animation {
+   from {
+      opacity: 1;
+   }
+
+   to {
+      opacity: 0;
+   }
+}
 
 
 @media only screen and (max-height: 600px) {

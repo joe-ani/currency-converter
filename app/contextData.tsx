@@ -4,8 +4,8 @@ import React, { createContext, useContext, useState, Dispatch, SetStateAction, R
 
 // Define the context type
 interface StateGlobalContextType {
-    loading: boolean;
-    setLoading: Dispatch<SetStateAction<boolean>>;
+    modalState: boolean;
+    setModalState: Dispatch<SetStateAction<boolean>>;
 }
 
 
@@ -17,10 +17,10 @@ const StateGlobalContext = createContext<StateGlobalContextType | undefined>(und
 
 // Create the provider
 export const StateGlobalProvider = ({ children }: ChildProps) => {
-    const [loading, setLoading] = useState<boolean>(false);
+    const [modalState, setModalState] = useState<boolean>(false);
 
     return (
-        <StateGlobalContext.Provider value={{ loading, setLoading }}>
+        <StateGlobalContext.Provider value={{ modalState, setModalState }}>
             {children}
         </StateGlobalContext.Provider>
     );

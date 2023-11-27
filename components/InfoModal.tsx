@@ -10,24 +10,35 @@ const InfoModal = () => {
     const bgRef = useRef<HTMLDivElement>(null)
     const mainRef = useRef<HTMLDivElement>(null)
     const contRef = useRef<HTMLDivElement>(null)
-    const { loading } = useContext(StateGlobalContext)
+    const { modalState, setModalState } = useContext(StateGlobalContext)
 
 
     useEffect(() => {
-        console.log(loading)
-    }, [])
+        console.log(modalState)
+        if (modalState === true) {
+            bgRef.current?.classList.add("bg-animate-in")
+            // contRef.current?.classList.add("")
+            setTimeout(() => {
+                mainRef.current?.classList.add("show")
+            }, 300)
+        } else return
+    }, [modalState])
+
     const toggleModal = () => {
         setToggle(!toggle)
+        setModalState(false)
         if (toggle) {
-            bgRef.current?.classList.add("")
-            contRef.current?.classList.add("")
+            bgRef.current?.classList.add("bg-animate-in")
+            // contRef.current?.classList.add("")
             setTimeout(() => {
                 mainRef.current?.classList.add("show")
             }, 300)
         } else {
-            mainRef.current?.classList.add("remove")
-            bgRef.current?.classList.add("")
-            contRef.current?.classList.add("")
+            setTimeout(() => {
+                mainRef.current?.classList.add("remove")
+            }, 300)
+            bgRef.current?.classList.add("bg-animate-out")
+            // contRef.current?.classList.add("")
         }
     }
 
