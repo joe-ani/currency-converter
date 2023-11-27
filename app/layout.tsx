@@ -1,5 +1,6 @@
 import './globals.css'
 import { Poppins, Ubuntu } from 'next/font/google'
+import { StateGlobalProvider } from "./contextData"
 
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] })
@@ -17,7 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <StateGlobalProvider>
+        <body className={poppins.className}>{children}</body>
+      </StateGlobalProvider>
     </html>
   )
 }

@@ -1,7 +1,8 @@
 "use client"
 
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
+import StateGlobalContext from "@/app/contextData"
 
 
 const InfoModal = () => {
@@ -9,7 +10,12 @@ const InfoModal = () => {
     const bgRef = useRef<HTMLDivElement>(null)
     const mainRef = useRef<HTMLDivElement>(null)
     const contRef = useRef<HTMLDivElement>(null)
+    const { loading } = useContext(StateGlobalContext)
 
+
+    useEffect(() => {
+        console.log(loading)
+    }, [])
     const toggleModal = () => {
         setToggle(!toggle)
         if (toggle) {

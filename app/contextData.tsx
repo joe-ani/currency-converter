@@ -1,17 +1,29 @@
-'use client'
+"use client"
 
-import { createContext, useState } from "react";
+import React, { createContext, useContext, useState, Dispatch, SetStateAction, ReactNode } from "react";
 
-const DataContext = createContext();
+// Define the context type
+interface StateGlobalContextType {
+    loading: boolean;
+    setLoading: Dispatch<SetStateAction<boolean>>;
+}
 
-export const DataProvider = ({ children }) => {
 
+interface ChildProps {
+    children: ReactNode;
+}
+// Create the context
+const StateGlobalContext = createContext<StateGlobalContextType | undefined>(undefined);
+
+// Create the provider
+export const StateGlobalProvider = ({ children }: ChildProps) => {
+    const [loading, setLoading] = useState<boolean>(false);
 
     return (
-        <DataContext.Provider value={{}}>
+        <StateGlobalContext.Provider value={{ loading, setLoading }}>
             {children}
-        </DataContext.Provider>
+        </StateGlobalContext.Provider>
     );
 };
 
-export default DataContext;
+export default StateGlobalContext;

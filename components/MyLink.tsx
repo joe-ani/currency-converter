@@ -1,7 +1,9 @@
 "use client"
 
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import StateGlobalContext from "@/app/contextData"
+
 
 const MyLink = () => {
     const [angle, setAngle] = useState("-90deg")
@@ -9,6 +11,8 @@ const MyLink = () => {
     // const [containerDisplay, setContainerDisplay] = useState("flex")
     const linkContRef = useRef<HTMLDivElement>(null)
     const iconContRef = useRef<HTMLDivElement>(null)
+    const { loading } = useContext(StateGlobalContext)
+
 
     const toggleLink = () => {
         setToggle(!toggle)
