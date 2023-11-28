@@ -34,6 +34,7 @@ const Main = () => {
   const [toRate, setToRate] = useState("")
   const [fromRate, setFromRate] = useState(1)
   const [initialize, setInitialize] = useState("OFF")
+  // could have used boolean for resultStatus 😑
   const [resultStatus, setResultStatus] = useState("")
   const [allowConversion, SetAllowConversion] = useState(true)
   const [fromRateColor, setFromRateColor] = useState("0, 0, 0")
@@ -103,6 +104,8 @@ const Main = () => {
     }
   }
 
+
+
   // Disable Button If the user Have a Conversion 
   useEffect(() => {
     console.log("checking1...", prevToCurrency, prevFromCurrency)
@@ -124,6 +127,7 @@ const Main = () => {
         SetAllowConversion(true)
         buttonRef.current?.classList.remove("disable-btn")
         buttonRef.current?.classList.add("convert_btn")
+
       }
     } else if (fromCurrency === prevFromCurrency || toCurrency === prevToCurrency || prevInput === input) {
       console.log("denying...")
@@ -131,6 +135,8 @@ const Main = () => {
       buttonRef.current?.classList.add("disable-btn")
       buttonRef.current?.classList.remove("convert_btn")
     }
+
+
 
     // set colours based on rates and conversion
     if (Number(fromRate) > Number(toRate) && toRate !== "") {
@@ -158,6 +164,8 @@ const Main = () => {
       setToRateIconColor("gray")
       setFromRateColor("0, 0, 0")
       setFromRateIconColor("gray")
+      setToAngle("360")
+      setFromAngle("360")
     }
   }, [toCurrency, fromCurrency, resultStatus, input])
 
@@ -175,14 +183,6 @@ const Main = () => {
     setPrevToCurrency(toCurrency)
     setPrevInput(input)
     if (allowConversion) {
-
-      // if (converted) {
-      //   // run calculation
-      //   console.log("running calc...")
-      //   const calcValue: any = Number(input) * Number(convertRate)
-      //   setResult(calcValue)
-      // } else {
-      // api....
       setResultStatus("in-progress")
       console.log("allowed")
       try {
