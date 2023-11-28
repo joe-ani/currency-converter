@@ -25,21 +25,15 @@ const InfoModal = () => {
     }, [modalState])
 
     const toggleModal = () => {
+        console.log("running")
         setToggle(!toggle)
         setModalState(false)
-        if (toggle) {
-            bgRef.current?.classList.add("bg-animate-in")
-            // contRef.current?.classList.add("")
-            setTimeout(() => {
-                mainRef.current?.classList.add("show")
-            }, 300)
-        } else {
-            setTimeout(() => {
-                mainRef.current?.classList.add("remove")
-            }, 300)
             bgRef.current?.classList.add("bg-animate-out")
             // contRef.current?.classList.add("")
-        }
+            setTimeout(() => {
+                mainRef.current?.classList.remove("show")
+            }, 300)
+  
     }
 
     return (

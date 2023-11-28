@@ -234,7 +234,7 @@ svg {
    }
 }
 .bg-animate-out {
-   animation: bg-animation 300ms linear;
+   animation: bg-out-animation 300ms linear;
 }
 
 @keyframes bg-out-animation {
