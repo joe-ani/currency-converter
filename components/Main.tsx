@@ -79,7 +79,7 @@ const Main = () => {
     setToCurrency(fromCurrency)
     setToCountryCode(fromCountryCode)
     setIsModeOn(!isModeOn);
-    
+
 
     if (isModeOn) {
       setConvertRate(toRate)
@@ -123,6 +123,10 @@ const Main = () => {
         } else {
           setConverted(false)
         }
+        // if user is typing do not if isnt do...
+        if (!isTyping) {
+          setToRate("")
+        }
         console.log("allowing...")
         SetAllowConversion(true)
         buttonRef.current?.classList.remove("disable-btn")
@@ -135,7 +139,6 @@ const Main = () => {
       buttonRef.current?.classList.add("disable-btn")
       buttonRef.current?.classList.remove("convert_btn")
     }
-
 
 
     // set colours based on rates and conversion
@@ -164,14 +167,16 @@ const Main = () => {
       setToRateIconColor("gray")
       setFromRateColor("0, 0, 0")
       setFromRateIconColor("gray")
+      setToCurrencyColor("gray")
+      setFromCurrencyColor("gray")
       setToAngle("360")
       setFromAngle("360")
     }
-  }, [toCurrency, fromCurrency, resultStatus, input])
+  }, [toCurrency, fromCurrency, toRate, resultStatus, input])
 
 
   useEffect(() => {
-  }, [resultStatus])
+  }, [resultStatus, toCurrency, fromCurrency,])
 
   // On button Click Convert the rate 
   const convert = async () => {
@@ -214,6 +219,34 @@ const Main = () => {
       console.log("denied")
     }
   };
+
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Event handler for when the input field is focused (user starts typing)
+  const handleFocus = () => {
+    setIsTyping(true);
+    console.log('User started typing...');
+  };
+
+  // Event handler for when the input field is blurred (user stops typing)
+  const handleBlur = () => {
+    setIsTyping(false);
+    console.log('User stopped typing...');
+  };
+
+  // Event handlers for keydown and keyup events to handle continuous typing
+  const handleKeyDown = () => {
+    setIsTyping(true);
+  };
+
+  const handleKeyUp = () => {
+    // Add a delay to consider the time between keydown and keyup
+    setTimeout(() => {
+      setIsTyping(false);
+    }, 500); // Adjust the delay as needed
+  };
+
+
 
   // omits use of letters and symbols form input
   const validateInput = () => {
@@ -279,7 +312,11 @@ const Main = () => {
         {/* Input */}
         <div className="flex flex-col w-full sm:w-[250px]">
           <p className="font-[600] text-gray-700 select-none">Amount</p>
-          <input ref={amountRef} onChange={validateInput} type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none" />
+          <input ref={amountRef} onChange={validateInput} onFocus={handleFocus}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            onKeyUp={handleKeyUp}
+            type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none" />
         </div>
 
         <div className="flex flex-col items-center justify-center w-full relative sm:gap-9 sm:flex-row">
