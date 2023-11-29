@@ -91,7 +91,7 @@ const Main = () => {
 
   // Render Result 
   const resultData = () => {
-    if (result === "" && initialize === "OFF") {
+    if (initialize === "OFF") {
       return <p className="">Set an amount and pick currencies.</p>
     } else if (result === "" && initialize === "ON" || resultStatus === "in-progress") {
       return <SkelentonLoader />
