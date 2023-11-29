@@ -171,6 +171,7 @@ const Main = () => {
       setFromCurrencyColor("gray")
       setToAngle("360")
       setFromAngle("360")
+      setResult(" ")
     }
   }, [toCurrency, fromCurrency, toRate, resultStatus, input])
 
