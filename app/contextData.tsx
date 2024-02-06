@@ -1,9 +1,9 @@
 "use client"
 
-import React, { createContext, useContext, useState, Dispatch, SetStateAction, ReactNode } from "react";
+import React, { createContext, useState, Dispatch, SetStateAction, ReactNode } from "react";
 
 // Define the context type
-interface StateGlobalContextType {
+export interface StateGlobalContextType {
     modalState: boolean;
     setModalState: Dispatch<SetStateAction<boolean>>;
 }

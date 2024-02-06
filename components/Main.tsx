@@ -123,8 +123,10 @@ const Main = () => {
         } else {
           setConverted(false)
         }
-        // if user is typing do not if isnt do...
+        // if user is typing do not if not do...
         if (!isTyping) {
+          console.log("gray stuff")
+
           setToRate("")
         }
         console.log("allowing...")
@@ -317,7 +319,7 @@ const Main = () => {
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
-            type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 border-[#059DFC] focus:outline-none" />
+            type="number" className="number-input bg-gray-200 p-[10px] rounded-md border-l-4 transition-all border-gray-400 focus:border-[#059DFC] border-[1px] focus:outline-none" />
         </div>
 
         <div className="flex flex-col items-center justify-center w-full relative sm:gap-9 sm:flex-row">
@@ -435,9 +437,8 @@ const Main = () => {
           Convert
         </button>
       </div>
-
     </div>
   );
 };
-
+ 
 export default Main;
